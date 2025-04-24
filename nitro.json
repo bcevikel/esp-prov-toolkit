@@ -1,0 +1,17 @@
+{
+  "cxxNamespace": ["espprovtoolkit"],
+  "ios": {
+    "iosModuleName": "EspProvToolkit"
+  },
+  "android": {
+    "androidNamespace": ["espprovtoolkit"],
+    "androidCxxLibName": "espprovtoolkit"
+  },
+  "autolinking": {
+    "EspProvToolkit": {
+      "swift": "EspProvToolkit",
+      "kotlin": "EspProvToolkit"
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
