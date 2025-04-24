@@ -56,7 +56,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+http://example.com.git"
+    "url": "git+https://github.com/bcevikel/esp-prov-toolkit.git"
   },
   "author": "berkcevikel <berk@besayazilim.net> (https://thebians.com)",
   "license": "MIT",

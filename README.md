@@ -16,6 +16,12 @@
   - Supports synchronous JS execution
   - Future-proof design
 
+- **Layered API Design** 🎯
+  - Direct native API access for maximum control
+  - Separated hooks for modular usage
+  - High-level hooks for quick implementation
+  - Documentation coming soon
+
 - **Multiple Provisioning Methods** 📡
   - SoftAP support
   - BLE support
@@ -29,7 +35,6 @@
 
 - ✅ iOS support available
 - 🔜 Android support coming soon
-- 📦 NPM release planned
 
 ## 🤔 Why Workarounds Instead of Fixes?
 
@@ -46,7 +51,6 @@ We've implemented workarounds to ensure stability and functionality. However, if
 ## 🔮 Future Plans
 
 - Android support implementation
-- NPM package release
 - Community-driven improvements
 - Potential ground-up rewrite based on community interest
 

@@ -82,3 +82,4 @@ lib/
 ios/generated
 android/generated
 
+/*.tgz
