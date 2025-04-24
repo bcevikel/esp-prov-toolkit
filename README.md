@@ -1,35 +1,63 @@
-# react-native-esp-prov-toolkit
+# 🚀 ESP Provisioning Toolkit
 
-A prov toolkit for esp
+> **Note**: This project is currently under active development. While iOS support is available, Android support is coming soon! 🛠️
 
-## Installation
+## 🌟 Features
 
-```sh
-npm install react-native-esp-prov-toolkit react-native-nitro-modules
+- **Fully Async API** 🔄
+  - Wraps closures and handles multiple callback invocations
+  - Clean and modern Swift-based implementation
 
-> `react-native-nitro-modules` is required as this library relies on [Nitro Modules](https://nitro.margelo.com/).
-```
+- **Nitro Architecture** ⚡
+  - Direct Swift execution without Objective-C intermediaries
+  - Optimized performance and reduced overhead
 
-## Usage
+- **New Architecture Compatible** 🏗️
+  - Supports synchronous JS execution
+  - Future-proof design
 
+- **Multiple Provisioning Methods** 📡
+  - SoftAP support
+  - BLE support
+  - Security levels 0, 1, and 2
 
-```js
-import { multiply } from 'react-native-esp-prov-toolkit';
+- **Enhanced Stability** 🛡️
+  - Patches and workarounds for Espressif library limitations
+  - Improved reliability and performance
 
-// ...
+## 🚧 Current Status
 
-const result = multiply(3, 7);
-```
+- ✅ iOS support available
+- 🔜 Android support coming soon
+- 📦 NPM release planned
 
+## 🤔 Why Workarounds Instead of Fixes?
 
-## Contributing
+The Espressif libraries present some architectural challenges:
+- Limited access to internal components (private/fileprivate)
+- Architectural limitations that prevent direct fixes
+- No ability to extend certain critical components
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+We've implemented workarounds to ensure stability and functionality. However, if there's community interest, we're open to creating a new branch where we can:
+- Rewrite the iOS/Android libraries from scratch
+- Implement proper fixes at the root level
+- Create a more maintainable and extensible solution
 
-## License
+## 🔮 Future Plans
 
-MIT
+- Android support implementation
+- NPM package release
+- Community-driven improvements
+- Potential ground-up rewrite based on community interest
+
+## 📝 License
+
+[Add your license information here]
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+*This project is actively maintained and developed. Stay tuned for updates!* 🎉
