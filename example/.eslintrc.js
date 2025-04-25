@@ -8,5 +8,5 @@ module.exports = {
     'array-bracket-spacing': 'off',
     'space-in-parens': 'off',
     'no-trailing-spaces': 'off',
-  }
-}; 
+  },
+};
