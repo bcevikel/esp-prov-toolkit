@@ -94,7 +94,6 @@ namespace margelo::nitro::espprovtoolkit {
       virtual std::shared_ptr<Promise<PTWifiScanResult>> scanWifiListOfESPDevice(const std::string& deviceName) = 0;
       virtual std::shared_ptr<Promise<PTSessionResult>> connectToESPDevice(const std::string& deviceName) = 0;
       virtual PTResult disconnectFromESPDevice(const std::string& deviceName) = 0;
-      virtual std::shared_ptr<Promise<PTSessionResult>> createSessionWithESPDevice(const std::string& deviceName) = 0;
       virtual std::shared_ptr<Promise<PTProvisionResult>> provisionESPDevice(const std::string& deviceName, const std::string& ssid, const std::string& password) = 0;
       virtual PTBooleanResult isESPDeviceSessionEstablished(const std::string& deviceName) = 0;
       virtual std::shared_ptr<Promise<PTStringResult>> sendDataToESPDevice(const std::string& deviceName, const std::string& path, const std::string& data) = 0;

@@ -102,15 +102,6 @@ export function disconnectFromESPDevice(deviceName: string): void {
   }
 }
 
-export async function createSessionWithESPDevice(
-  deviceName: string
-): Promise<PTSessionStatus> {
-  const result = await handleError(
-    EspProvToolkitHybridObject.createSessionWithESPDevice(deviceName)
-  );
-  return result.status!;
-}
-
 export async function provisionESPDevice(
   deviceName: string,
   ssid: string,

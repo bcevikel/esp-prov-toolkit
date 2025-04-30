@@ -12,6 +12,7 @@ import com.facebook.proguard.annotations.DoNotStrip
 import com.facebook.react.bridge.ReactApplicationContext
 import com.margelo.nitro.core.Promise
 import com.margelo.nitro.espprovtoolkit.Wrappers
+import android.util.Base64
 
 @DoNotStrip
 class EspProvToolkit : HybridEspProvToolkitSpec() {
@@ -146,7 +147,17 @@ class EspProvToolkit : HybridEspProvToolkitSpec() {
   }
 
   override fun getESPDevice(deviceName: String): PTDeviceResult {
-    TODO("Not yet implemented")
+    try{
+      val device = getDevice(deviceName)
+      val isConnected = isESPDeviceSessionEstablished(deviceName).result
+      val caps = device.deviceCapabilities?.filterNotNull()?.toTypedArray()
+      val deviceData = PTDevice(deviceName,ConversionHelpers.convertSecurity(device.securityType),
+      ConversionHelpers.convertTransport(device.transportType), isConnected, device.userName,
+        device.versionInfo, caps, null)
+      return PTDeviceResult(true,deviceData)
+    } catch (e : Exception){
+      return PTDeviceResult(false,null)
+    }
   }
 
   override fun doesESPDeviceExist(deviceName: String): Boolean {
@@ -204,9 +215,6 @@ class EspProvToolkit : HybridEspProvToolkitSpec() {
     }
   }
 
-  override fun createSessionWithESPDevice(deviceName: String): Promise<PTSessionResult> {
-    TODO("Not yet implemented") // candidate for removal
-  }
 
   override fun provisionESPDevice(
     deviceName: String,
@@ -240,7 +248,34 @@ class EspProvToolkit : HybridEspProvToolkitSpec() {
     path: String,
     data: String
   ): Promise<PTStringResult> {
-    TODO("Not yet implemented")
+    return Promise.async {
+      try {
+        var byteData : ByteArray? = null
+
+        // Safely decode the Base64 data
+        try {
+          byteData = Base64.decode(data, Base64.DEFAULT)
+        } catch (e : Exception){
+          return@async PTStringResult(false,null,
+            PTExtendedError.RUNTIME_BAD_BASE64_DATA.toDouble())
+        }
+        // actually send it
+        val device = getDevice(deviceName)
+        val resp = Wrappers.sendDataToEspDevice(device,path,byteData)
+        // now try to encode the binary data to base64
+        var respBase64 : String? = null
+        try {
+          respBase64 = Base64.encodeToString(resp, Base64.DEFAULT)
+        } catch (e : Exception){
+          return@async PTStringResult(false,null,
+            PTExtendedError.RUNTIME_BAD_BASE64_DATA.toDouble())
+        }
+        // return the base64
+        return@async PTStringResult(true,respBase64,null)
+      } catch (e : Exception){
+        return@async PTStringResult(false,null, handleExceptions(e).toDouble())
+      }
+    }
   }
 
   override fun getIPv4AddressOfESPDevice(deviceName: String): PTStringResult { // candidate for removal

@@ -23,8 +23,6 @@ public extension PTError {
         self = .wifiScanEmptyResultCount
       case "WIFI_SCAN_REQUEST_ERROR":
         self = .wifiScanRequestError
-      case "ESP_NATIVE_UNKNOWN_ERROR":
-        self = .espNativeUnknownError
       case "SESSION_INIT_ERROR":
         self = .sessionInitError
       case "SESSION_NOT_ESTABLISHED":
@@ -57,6 +55,8 @@ public extension PTError {
         self = .videoOutputError
       case "INVALID_QR_CODE":
         self = .invalidQrCode
+      case "BLE_SEARCH_ERROR":
+        self = .bleSearchError
       case "ESP_DEVICE_NOT_FOUND":
         self = .espDeviceNotFound
       case "AP_SEARCH_NOT_SUPPORTED":
@@ -75,6 +75,8 @@ public extension PTError {
         self = .provWifiStatusNetworkNotFound
       case "PROV_WIFI_STATUS_UNKNOWN_ERROR":
         self = .provWifiStatusUnknownError
+      case "PROV_TIMED_OUT_ERROR":
+        self = .provTimedOutError
       case "PROV_UNKNOWN_ERROR":
         self = .provUnknownError
       case "RUNTIME_BAD_CLOSURE_ARGS":
@@ -85,8 +87,12 @@ public extension PTError {
         self = .runtimeBadBase64Data
       case "RUNTIME_UNKNOWN_ERROR":
         self = .runtimeUnknownError
-      case "PROV_TIMED_OUT_ERROR":
-        self = .provTimedOutError
+      case "ESP_NATIVE_UNKNOWN_ERROR":
+        self = .espNativeUnknownError
+      case "ESP_INSUFFICIENT_PERMISSIONS":
+        self = .espInsufficientPermissions
+      case "BLE_ADAPTER_NOT_AVAILABLE":
+        self = .bleAdapterNotAvailable
       default:
         return nil
     }
@@ -103,8 +109,6 @@ public extension PTError {
         return "WIFI_SCAN_EMPTY_RESULT_COUNT"
       case .wifiScanRequestError:
         return "WIFI_SCAN_REQUEST_ERROR"
-      case .espNativeUnknownError:
-        return "ESP_NATIVE_UNKNOWN_ERROR"
       case .sessionInitError:
         return "SESSION_INIT_ERROR"
       case .sessionNotEstablished:
@@ -137,6 +141,8 @@ public extension PTError {
         return "VIDEO_OUTPUT_ERROR"
       case .invalidQrCode:
         return "INVALID_QR_CODE"
+      case .bleSearchError:
+        return "BLE_SEARCH_ERROR"
       case .espDeviceNotFound:
         return "ESP_DEVICE_NOT_FOUND"
       case .apSearchNotSupported:
@@ -155,6 +161,8 @@ public extension PTError {
         return "PROV_WIFI_STATUS_NETWORK_NOT_FOUND"
       case .provWifiStatusUnknownError:
         return "PROV_WIFI_STATUS_UNKNOWN_ERROR"
+      case .provTimedOutError:
+        return "PROV_TIMED_OUT_ERROR"
       case .provUnknownError:
         return "PROV_UNKNOWN_ERROR"
       case .runtimeBadClosureArgs:
@@ -165,8 +173,12 @@ public extension PTError {
         return "RUNTIME_BAD_BASE64_DATA"
       case .runtimeUnknownError:
         return "RUNTIME_UNKNOWN_ERROR"
-      case .provTimedOutError:
-        return "PROV_TIMED_OUT_ERROR"
+      case .espNativeUnknownError:
+        return "ESP_NATIVE_UNKNOWN_ERROR"
+      case .espInsufficientPermissions:
+        return "ESP_INSUFFICIENT_PERMISSIONS"
+      case .bleAdapterNotAvailable:
+        return "BLE_ADAPTER_NOT_AVAILABLE"
     }
   }
 }

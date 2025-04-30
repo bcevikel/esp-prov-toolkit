@@ -242,25 +242,6 @@ public class HybridEspProvToolkitSpec_cxx {
   }
   
   @inline(__always)
-  public final func createSessionWithESPDevice(deviceName: std.string) -> bridge.Result_std__shared_ptr_Promise_PTSessionResult___ {
-    do {
-      let __result = try self.__implementation.createSessionWithESPDevice(deviceName: String(deviceName))
-      let __resultCpp = { () -> bridge.std__shared_ptr_Promise_PTSessionResult__ in
-        let __promise = bridge.create_std__shared_ptr_Promise_PTSessionResult__()
-        let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_PTSessionResult__(__promise)
-        __result
-          .then({ __result in __promiseHolder.resolve(__result) })
-          .catch({ __error in __promiseHolder.reject(__error.toCpp()) })
-        return __promise
-      }()
-      return bridge.create_Result_std__shared_ptr_Promise_PTSessionResult___(__resultCpp)
-    } catch (let __error) {
-      let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_std__shared_ptr_Promise_PTSessionResult___(__exceptionPtr)
-    }
-  }
-  
-  @inline(__always)
   public final func provisionESPDevice(deviceName: std.string, ssid: std.string, password: std.string) -> bridge.Result_std__shared_ptr_Promise_PTProvisionResult___ {
     do {
       let __result = try self.__implementation.provisionESPDevice(deviceName: String(deviceName), ssid: String(ssid), password: String(password))

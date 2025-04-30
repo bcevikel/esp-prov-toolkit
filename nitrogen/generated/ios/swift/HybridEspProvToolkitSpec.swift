@@ -22,7 +22,6 @@ public protocol HybridEspProvToolkitSpec_protocol: HybridObject {
   func scanWifiListOfESPDevice(deviceName: String) throws -> Promise<PTWifiScanResult>
   func connectToESPDevice(deviceName: String) throws -> Promise<PTSessionResult>
   func disconnectFromESPDevice(deviceName: String) throws -> PTResult
-  func createSessionWithESPDevice(deviceName: String) throws -> Promise<PTSessionResult>
   func provisionESPDevice(deviceName: String, ssid: String, password: String) throws -> Promise<PTProvisionResult>
   func isESPDeviceSessionEstablished(deviceName: String) throws -> PTBooleanResult
   func sendDataToESPDevice(deviceName: String, path: String, data: String) throws -> Promise<PTStringResult>

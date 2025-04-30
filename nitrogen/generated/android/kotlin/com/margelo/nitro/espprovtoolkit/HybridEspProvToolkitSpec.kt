@@ -74,10 +74,6 @@ abstract class HybridEspProvToolkitSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
-  abstract fun createSessionWithESPDevice(deviceName: String): Promise<PTSessionResult>
-  
-  @DoNotStrip
-  @Keep
   abstract fun provisionESPDevice(deviceName: String, ssid: String, password: String): Promise<PTProvisionResult>
   
   @DoNotStrip

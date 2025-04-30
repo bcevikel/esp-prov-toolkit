@@ -446,5 +446,37 @@ class Wrappers {
         }
       }
     }
+
+    suspend fun sendDataToEspDevice(espDevice: ESPDevice, path : String, data : ByteArray): ByteArray?
+      = suspendCancellableCoroutine  { continuation ->
+
+      // Set up the callback object
+      val respListener = object : ResponseListener{
+        override fun onSuccess(returnData: ByteArray?) {
+          if(continuation.isActive){
+            continuation.resume(data)
+          }
+        }
+
+        override fun onFailure(e: java.lang.Exception?) {
+          if(continuation.isActive){
+            // Throw our custom type by checking against known error messages
+            e?.let { continuation.resumeWithException(it) }
+          }
+        }
+      }
+
+      // Launch on Main dispatcher since ESP operations require the main thread
+      CoroutineScope(Dispatchers.Main).launch {
+        try {
+          espDevice.sendDataToCustomEndPoint(path,data,respListener)
+        } catch (e: Exception) {
+          // Handle any exceptions during the start of scanning
+          if (continuation.isActive) {
+            continuation.resumeWithException(e)
+          }
+        }
+      }
+    }
   }
 }

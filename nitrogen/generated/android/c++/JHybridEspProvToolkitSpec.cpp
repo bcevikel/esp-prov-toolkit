@@ -184,22 +184,6 @@ namespace margelo::nitro::espprovtoolkit {
     auto __result = method(_javaPart, jni::make_jstring(deviceName));
     return __result->toCpp();
   }
-  std::shared_ptr<Promise<PTSessionResult>> JHybridEspProvToolkitSpec::createSessionWithESPDevice(const std::string& deviceName) {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* deviceName */)>("createSessionWithESPDevice");
-    auto __result = method(_javaPart, jni::make_jstring(deviceName));
-    return [&]() {
-      auto __promise = Promise<PTSessionResult>::create();
-      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
-        auto __result = jni::static_ref_cast<JPTSessionResult>(__boxedResult);
-        __promise->resolve(__result->toCpp());
-      });
-      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
-        jni::JniException __jniError(__throwable);
-        __promise->reject(std::make_exception_ptr(__jniError));
-      });
-      return __promise;
-    }();
-  }
   std::shared_ptr<Promise<PTProvisionResult>> JHybridEspProvToolkitSpec::provisionESPDevice(const std::string& deviceName, const std::string& ssid, const std::string& password) {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JString> /* deviceName */, jni::alias_ref<jni::JString> /* ssid */, jni::alias_ref<jni::JString> /* password */)>("provisionESPDevice");
     auto __result = method(_javaPart, jni::make_jstring(deviceName), jni::make_jstring(ssid), jni::make_jstring(password));

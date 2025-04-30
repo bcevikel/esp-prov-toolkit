@@ -44,7 +44,6 @@ namespace margelo::nitro::espprovtoolkit {
       static const auto fieldWIFI_SCAN_EMPTY_CONFIG_DATA = clazz->getStaticField<JPTError>("WIFI_SCAN_EMPTY_CONFIG_DATA");
       static const auto fieldWIFI_SCAN_EMPTY_RESULT_COUNT = clazz->getStaticField<JPTError>("WIFI_SCAN_EMPTY_RESULT_COUNT");
       static const auto fieldWIFI_SCAN_REQUEST_ERROR = clazz->getStaticField<JPTError>("WIFI_SCAN_REQUEST_ERROR");
-      static const auto fieldESP_NATIVE_UNKNOWN_ERROR = clazz->getStaticField<JPTError>("ESP_NATIVE_UNKNOWN_ERROR");
       static const auto fieldSESSION_INIT_ERROR = clazz->getStaticField<JPTError>("SESSION_INIT_ERROR");
       static const auto fieldSESSION_NOT_ESTABLISHED = clazz->getStaticField<JPTError>("SESSION_NOT_ESTABLISHED");
       static const auto fieldSESSION_SEND_DATA_ERROR = clazz->getStaticField<JPTError>("SESSION_SEND_DATA_ERROR");
@@ -61,6 +60,7 @@ namespace margelo::nitro::espprovtoolkit {
       static const auto fieldVIDEO_INPUT_ERROR = clazz->getStaticField<JPTError>("VIDEO_INPUT_ERROR");
       static const auto fieldVIDEO_OUTPUT_ERROR = clazz->getStaticField<JPTError>("VIDEO_OUTPUT_ERROR");
       static const auto fieldINVALID_QR_CODE = clazz->getStaticField<JPTError>("INVALID_QR_CODE");
+      static const auto fieldBLE_SEARCH_ERROR = clazz->getStaticField<JPTError>("BLE_SEARCH_ERROR");
       static const auto fieldESP_DEVICE_NOT_FOUND = clazz->getStaticField<JPTError>("ESP_DEVICE_NOT_FOUND");
       static const auto fieldAP_SEARCH_NOT_SUPPORTED = clazz->getStaticField<JPTError>("AP_SEARCH_NOT_SUPPORTED");
       static const auto fieldPROV_SESSION_ERROR = clazz->getStaticField<JPTError>("PROV_SESSION_ERROR");
@@ -70,12 +70,15 @@ namespace margelo::nitro::espprovtoolkit {
       static const auto fieldPROV_WIFI_STATUS_AUTH_ERROR = clazz->getStaticField<JPTError>("PROV_WIFI_STATUS_AUTH_ERROR");
       static const auto fieldPROV_WIFI_STATUS_NETWORK_NOT_FOUND = clazz->getStaticField<JPTError>("PROV_WIFI_STATUS_NETWORK_NOT_FOUND");
       static const auto fieldPROV_WIFI_STATUS_UNKNOWN_ERROR = clazz->getStaticField<JPTError>("PROV_WIFI_STATUS_UNKNOWN_ERROR");
+      static const auto fieldPROV_TIMED_OUT_ERROR = clazz->getStaticField<JPTError>("PROV_TIMED_OUT_ERROR");
       static const auto fieldPROV_UNKNOWN_ERROR = clazz->getStaticField<JPTError>("PROV_UNKNOWN_ERROR");
       static const auto fieldRUNTIME_BAD_CLOSURE_ARGS = clazz->getStaticField<JPTError>("RUNTIME_BAD_CLOSURE_ARGS");
       static const auto fieldRUNTIME_DOES_NOT_EXIST_LOCALLY = clazz->getStaticField<JPTError>("RUNTIME_DOES_NOT_EXIST_LOCALLY");
       static const auto fieldRUNTIME_BAD_BASE64_DATA = clazz->getStaticField<JPTError>("RUNTIME_BAD_BASE64_DATA");
       static const auto fieldRUNTIME_UNKNOWN_ERROR = clazz->getStaticField<JPTError>("RUNTIME_UNKNOWN_ERROR");
-      static const auto fieldPROV_TIMED_OUT_ERROR = clazz->getStaticField<JPTError>("PROV_TIMED_OUT_ERROR");
+      static const auto fieldESP_NATIVE_UNKNOWN_ERROR = clazz->getStaticField<JPTError>("ESP_NATIVE_UNKNOWN_ERROR");
+      static const auto fieldESP_INSUFFICIENT_PERMISSIONS = clazz->getStaticField<JPTError>("ESP_INSUFFICIENT_PERMISSIONS");
+      static const auto fieldBLE_ADAPTER_NOT_AVAILABLE = clazz->getStaticField<JPTError>("BLE_ADAPTER_NOT_AVAILABLE");
       
       switch (value) {
         case PTError::WIFI_SCAN_EMPTY_CONFIG_DATA:
@@ -84,8 +87,6 @@ namespace margelo::nitro::espprovtoolkit {
           return clazz->getStaticFieldValue(fieldWIFI_SCAN_EMPTY_RESULT_COUNT);
         case PTError::WIFI_SCAN_REQUEST_ERROR:
           return clazz->getStaticFieldValue(fieldWIFI_SCAN_REQUEST_ERROR);
-        case PTError::ESP_NATIVE_UNKNOWN_ERROR:
-          return clazz->getStaticFieldValue(fieldESP_NATIVE_UNKNOWN_ERROR);
         case PTError::SESSION_INIT_ERROR:
           return clazz->getStaticFieldValue(fieldSESSION_INIT_ERROR);
         case PTError::SESSION_NOT_ESTABLISHED:
@@ -118,6 +119,8 @@ namespace margelo::nitro::espprovtoolkit {
           return clazz->getStaticFieldValue(fieldVIDEO_OUTPUT_ERROR);
         case PTError::INVALID_QR_CODE:
           return clazz->getStaticFieldValue(fieldINVALID_QR_CODE);
+        case PTError::BLE_SEARCH_ERROR:
+          return clazz->getStaticFieldValue(fieldBLE_SEARCH_ERROR);
         case PTError::ESP_DEVICE_NOT_FOUND:
           return clazz->getStaticFieldValue(fieldESP_DEVICE_NOT_FOUND);
         case PTError::AP_SEARCH_NOT_SUPPORTED:
@@ -136,6 +139,8 @@ namespace margelo::nitro::espprovtoolkit {
           return clazz->getStaticFieldValue(fieldPROV_WIFI_STATUS_NETWORK_NOT_FOUND);
         case PTError::PROV_WIFI_STATUS_UNKNOWN_ERROR:
           return clazz->getStaticFieldValue(fieldPROV_WIFI_STATUS_UNKNOWN_ERROR);
+        case PTError::PROV_TIMED_OUT_ERROR:
+          return clazz->getStaticFieldValue(fieldPROV_TIMED_OUT_ERROR);
         case PTError::PROV_UNKNOWN_ERROR:
           return clazz->getStaticFieldValue(fieldPROV_UNKNOWN_ERROR);
         case PTError::RUNTIME_BAD_CLOSURE_ARGS:
@@ -146,8 +151,12 @@ namespace margelo::nitro::espprovtoolkit {
           return clazz->getStaticFieldValue(fieldRUNTIME_BAD_BASE64_DATA);
         case PTError::RUNTIME_UNKNOWN_ERROR:
           return clazz->getStaticFieldValue(fieldRUNTIME_UNKNOWN_ERROR);
-        case PTError::PROV_TIMED_OUT_ERROR:
-          return clazz->getStaticFieldValue(fieldPROV_TIMED_OUT_ERROR);
+        case PTError::ESP_NATIVE_UNKNOWN_ERROR:
+          return clazz->getStaticFieldValue(fieldESP_NATIVE_UNKNOWN_ERROR);
+        case PTError::ESP_INSUFFICIENT_PERMISSIONS:
+          return clazz->getStaticFieldValue(fieldESP_INSUFFICIENT_PERMISSIONS);
+        case PTError::BLE_ADAPTER_NOT_AVAILABLE:
+          return clazz->getStaticFieldValue(fieldBLE_ADAPTER_NOT_AVAILABLE);
         default:
           std::string stringValue = std::to_string(static_cast<int>(value));
           throw std::invalid_argument("Invalid enum value (" + stringValue + "!");

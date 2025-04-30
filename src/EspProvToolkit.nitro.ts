@@ -11,8 +11,8 @@ import type {
   PTBooleanResult,
   PTLocationAccess,
   PTDeviceResult,
+  PTError,
 } from './EspProvToolkit.types';
-import type { PTError } from '../lib/typescript/src';
 
 export interface EspProvToolkit
   extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
@@ -42,8 +42,6 @@ export interface EspProvToolkit
   connectToESPDevice(deviceName: string): Promise<PTSessionResult>;
 
   disconnectFromESPDevice(deviceName: string): PTResult;
-
-  createSessionWithESPDevice(deviceName: string): Promise<PTSessionResult>;
 
   provisionESPDevice(
     deviceName: string,

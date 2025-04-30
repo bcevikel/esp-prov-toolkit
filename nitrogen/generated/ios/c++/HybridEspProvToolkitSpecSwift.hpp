@@ -168,14 +168,6 @@ namespace margelo::nitro::espprovtoolkit {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline std::shared_ptr<Promise<PTSessionResult>> createSessionWithESPDevice(const std::string& deviceName) override {
-      auto __result = _swiftPart.createSessionWithESPDevice(deviceName);
-      if (__result.hasError()) [[unlikely]] {
-        std::rethrow_exception(__result.error());
-      }
-      auto __value = std::move(__result.value());
-      return __value;
-    }
     inline std::shared_ptr<Promise<PTProvisionResult>> provisionESPDevice(const std::string& deviceName, const std::string& ssid, const std::string& password) override {
       auto __result = _swiftPart.provisionESPDevice(deviceName, ssid, password);
       if (__result.hasError()) [[unlikely]] {

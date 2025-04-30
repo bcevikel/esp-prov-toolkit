@@ -22,7 +22,6 @@ namespace margelo::nitro::espprovtoolkit {
       prototype.registerHybridMethod("scanWifiListOfESPDevice", &HybridEspProvToolkitSpec::scanWifiListOfESPDevice);
       prototype.registerHybridMethod("connectToESPDevice", &HybridEspProvToolkitSpec::connectToESPDevice);
       prototype.registerHybridMethod("disconnectFromESPDevice", &HybridEspProvToolkitSpec::disconnectFromESPDevice);
-      prototype.registerHybridMethod("createSessionWithESPDevice", &HybridEspProvToolkitSpec::createSessionWithESPDevice);
       prototype.registerHybridMethod("provisionESPDevice", &HybridEspProvToolkitSpec::provisionESPDevice);
       prototype.registerHybridMethod("isESPDeviceSessionEstablished", &HybridEspProvToolkitSpec::isESPDeviceSessionEstablished);
       prototype.registerHybridMethod("sendDataToESPDevice", &HybridEspProvToolkitSpec::sendDataToESPDevice);

@@ -28,7 +28,6 @@ namespace margelo::nitro::espprovtoolkit {
     WIFI_SCAN_EMPTY_CONFIG_DATA      SWIFT_NAME(wifiScanEmptyConfigData) = 1,
     WIFI_SCAN_EMPTY_RESULT_COUNT      SWIFT_NAME(wifiScanEmptyResultCount) = 2,
     WIFI_SCAN_REQUEST_ERROR      SWIFT_NAME(wifiScanRequestError) = 3,
-    ESP_NATIVE_UNKNOWN_ERROR      SWIFT_NAME(espNativeUnknownError) = 4,
     SESSION_INIT_ERROR      SWIFT_NAME(sessionInitError) = 11,
     SESSION_NOT_ESTABLISHED      SWIFT_NAME(sessionNotEstablished) = 12,
     SESSION_SEND_DATA_ERROR      SWIFT_NAME(sessionSendDataError) = 13,
@@ -45,6 +44,7 @@ namespace margelo::nitro::espprovtoolkit {
     VIDEO_INPUT_ERROR      SWIFT_NAME(videoInputError) = 24,
     VIDEO_OUTPUT_ERROR      SWIFT_NAME(videoOutputError) = 25,
     INVALID_QR_CODE      SWIFT_NAME(invalidQrCode) = 26,
+    BLE_SEARCH_ERROR      SWIFT_NAME(bleSearchError) = 46,
     ESP_DEVICE_NOT_FOUND      SWIFT_NAME(espDeviceNotFound) = 27,
     AP_SEARCH_NOT_SUPPORTED      SWIFT_NAME(apSearchNotSupported) = 28,
     PROV_SESSION_ERROR      SWIFT_NAME(provSessionError) = 31,
@@ -54,12 +54,15 @@ namespace margelo::nitro::espprovtoolkit {
     PROV_WIFI_STATUS_AUTH_ERROR      SWIFT_NAME(provWifiStatusAuthError) = 35,
     PROV_WIFI_STATUS_NETWORK_NOT_FOUND      SWIFT_NAME(provWifiStatusNetworkNotFound) = 36,
     PROV_WIFI_STATUS_UNKNOWN_ERROR      SWIFT_NAME(provWifiStatusUnknownError) = 37,
+    PROV_TIMED_OUT_ERROR      SWIFT_NAME(provTimedOutError) = 45,
     PROV_UNKNOWN_ERROR      SWIFT_NAME(provUnknownError) = 38,
     RUNTIME_BAD_CLOSURE_ARGS      SWIFT_NAME(runtimeBadClosureArgs) = 41,
     RUNTIME_DOES_NOT_EXIST_LOCALLY      SWIFT_NAME(runtimeDoesNotExistLocally) = 42,
     RUNTIME_BAD_BASE64_DATA      SWIFT_NAME(runtimeBadBase64Data) = 43,
     RUNTIME_UNKNOWN_ERROR      SWIFT_NAME(runtimeUnknownError) = 44,
-    PROV_TIMED_OUT_ERROR      SWIFT_NAME(provTimedOutError) = 45,
+    ESP_NATIVE_UNKNOWN_ERROR      SWIFT_NAME(espNativeUnknownError) = 4,
+    ESP_INSUFFICIENT_PERMISSIONS      SWIFT_NAME(espInsufficientPermissions) = 47,
+    BLE_ADAPTER_NOT_AVAILABLE      SWIFT_NAME(bleAdapterNotAvailable) = 48,
   } CLOSED_ENUM;
 
 } // namespace margelo::nitro::espprovtoolkit
@@ -90,7 +93,7 @@ namespace margelo::nitro {
         return false;
       }
       // Check if we are within the bounds of the enum.
-      return integer >= 0 && integer <= 34;
+      return integer >= 0 && integer <= 37;
     }
   };
 
