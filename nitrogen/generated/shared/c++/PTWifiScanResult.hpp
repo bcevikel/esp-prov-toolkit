@@ -20,13 +20,10 @@
 
 // Forward declaration of `PTWifiEntry` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTWifiEntry; }
-// Forward declaration of `PTError` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 
 #include <optional>
 #include <vector>
 #include "PTWifiEntry.hpp"
-#include "PTError.hpp"
 
 namespace margelo::nitro::espprovtoolkit {
 
@@ -37,11 +34,11 @@ namespace margelo::nitro::espprovtoolkit {
   public:
     bool success     SWIFT_PRIVATE;
     std::optional<std::vector<PTWifiEntry>> networks     SWIFT_PRIVATE;
-    std::optional<PTError> error     SWIFT_PRIVATE;
+    std::optional<double> error     SWIFT_PRIVATE;
 
   public:
     PTWifiScanResult() = default;
-    explicit PTWifiScanResult(bool success, std::optional<std::vector<PTWifiEntry>> networks, std::optional<PTError> error): success(success), networks(networks), error(error) {}
+    explicit PTWifiScanResult(bool success, std::optional<std::vector<PTWifiEntry>> networks, std::optional<double> error): success(success), networks(networks), error(error) {}
   };
 
 } // namespace margelo::nitro::espprovtoolkit
@@ -58,14 +55,14 @@ namespace margelo::nitro {
       return PTWifiScanResult(
         JSIConverter<bool>::fromJSI(runtime, obj.getProperty(runtime, "success")),
         JSIConverter<std::optional<std::vector<PTWifiEntry>>>::fromJSI(runtime, obj.getProperty(runtime, "networks")),
-        JSIConverter<std::optional<PTError>>::fromJSI(runtime, obj.getProperty(runtime, "error"))
+        JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, "error"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const PTWifiScanResult& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "success", JSIConverter<bool>::toJSI(runtime, arg.success));
       obj.setProperty(runtime, "networks", JSIConverter<std::optional<std::vector<PTWifiEntry>>>::toJSI(runtime, arg.networks));
-      obj.setProperty(runtime, "error", JSIConverter<std::optional<PTError>>::toJSI(runtime, arg.error));
+      obj.setProperty(runtime, "error", JSIConverter<std::optional<double>>::toJSI(runtime, arg.error));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -75,7 +72,7 @@ namespace margelo::nitro {
       jsi::Object obj = value.getObject(runtime);
       if (!JSIConverter<bool>::canConvert(runtime, obj.getProperty(runtime, "success"))) return false;
       if (!JSIConverter<std::optional<std::vector<PTWifiEntry>>>::canConvert(runtime, obj.getProperty(runtime, "networks"))) return false;
-      if (!JSIConverter<std::optional<PTError>>::canConvert(runtime, obj.getProperty(runtime, "error"))) return false;
+      if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, "error"))) return false;
       return true;
     }
   };

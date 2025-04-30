@@ -16,8 +16,6 @@ namespace margelo::nitro::espprovtoolkit { struct PTBooleanResult; }
 namespace margelo::nitro::espprovtoolkit { struct PTDeviceResult; }
 // Forward declaration of `PTDevice` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTDevice; }
-// Forward declaration of `PTError` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 // Forward declaration of `PTLocationAccess` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
 // Forward declaration of `PTProvisionResult` to properly resolve imports.
@@ -52,7 +50,6 @@ namespace EspProvToolkit { class HybridEspProvToolkitSpec_cxx; }
 #include "PTBooleanResult.hpp"
 #include "PTDevice.hpp"
 #include "PTDeviceResult.hpp"
-#include "PTError.hpp"
 #include "PTLocationAccess.hpp"
 #include "PTProvisionResult.hpp"
 #include "PTProvisionStatus.hpp"
@@ -101,13 +98,13 @@ namespace margelo::nitro::espprovtoolkit::bridge::swift {
     return std::optional<std::vector<std::string>>(value);
   }
   
-  // pragma MARK: std::optional<PTError>
+  // pragma MARK: std::optional<double>
   /**
-   * Specialized version of `std::optional<PTError>`.
+   * Specialized version of `std::optional<double>`.
    */
-  using std__optional_PTError_ = std::optional<PTError>;
-  inline std::optional<PTError> create_std__optional_PTError_(const PTError& value) {
-    return std::optional<PTError>(value);
+  using std__optional_double_ = std::optional<double>;
+  inline std::optional<double> create_std__optional_double_(const double& value) {
+    return std::optional<double>(value);
   }
   
   // pragma MARK: std::shared_ptr<Promise<PTSearchResult>>
@@ -225,15 +222,6 @@ namespace margelo::nitro::espprovtoolkit::bridge::swift {
   using std__optional_PTDevice_ = std::optional<PTDevice>;
   inline std::optional<PTDevice> create_std__optional_PTDevice_(const PTDevice& value) {
     return std::optional<PTDevice>(value);
-  }
-  
-  // pragma MARK: std::optional<double>
-  /**
-   * Specialized version of `std::optional<double>`.
-   */
-  using std__optional_double_ = std::optional<double>;
-  inline std::optional<double> create_std__optional_double_(const double& value) {
-    return std::optional<double>(value);
   }
   
   // pragma MARK: std::vector<PTWifiEntry>
@@ -587,13 +575,13 @@ namespace margelo::nitro::espprovtoolkit::bridge::swift {
     return Result<PTStringResult>::withError(error);
   }
   
-  // pragma MARK: Result<int64_t>
-  using Result_int64_t_ = Result<int64_t>;
-  inline Result_int64_t_ create_Result_int64_t_(int64_t value) {
-    return Result<int64_t>::withValue(std::move(value));
+  // pragma MARK: Result<double>
+  using Result_double_ = Result<double>;
+  inline Result_double_ create_Result_double_(double value) {
+    return Result<double>::withValue(std::move(value));
   }
-  inline Result_int64_t_ create_Result_int64_t_(const std::exception_ptr& error) {
-    return Result<int64_t>::withError(error);
+  inline Result_double_ create_Result_double_(const std::exception_ptr& error) {
+    return Result<double>::withError(error);
   }
   
   // pragma MARK: Result<PTLocationAccess>

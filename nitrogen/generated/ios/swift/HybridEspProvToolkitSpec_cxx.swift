@@ -346,7 +346,7 @@ public class HybridEspProvToolkitSpec_cxx {
   }
   
   @inline(__always)
-  public final func registerLocationStatusCallback(callback: bridge.Func_std__shared_ptr_Promise_bool___PTLocationAccess) -> bridge.Result_int64_t_ {
+  public final func registerLocationStatusCallback(callback: bridge.Func_std__shared_ptr_Promise_bool___PTLocationAccess) -> bridge.Result_double_ {
     do {
       let __result = try self.__implementation.registerLocationStatusCallback(callback: { () -> (PTLocationAccess) -> Promise<Bool> in
         let __wrappedFunction = bridge.wrap_Func_std__shared_ptr_Promise_bool___PTLocationAccess(callback)
@@ -376,15 +376,15 @@ public class HybridEspProvToolkitSpec_cxx {
         }
       }())
       let __resultCpp = __result
-      return bridge.create_Result_int64_t_(__resultCpp)
+      return bridge.create_Result_double_(__resultCpp)
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
-      return bridge.create_Result_int64_t_(__exceptionPtr)
+      return bridge.create_Result_double_(__exceptionPtr)
     }
   }
   
   @inline(__always)
-  public final func removeLocationStatusCallback(id: Int64) -> bridge.Result_bool_ {
+  public final func removeLocationStatusCallback(id: Double) -> bridge.Result_bool_ {
     do {
       let __result = try self.__implementation.removeLocationStatusCallback(id: id)
       let __resultCpp = __result
@@ -404,6 +404,18 @@ public class HybridEspProvToolkitSpec_cxx {
     } catch (let __error) {
       let __exceptionPtr = __error.toCpp()
       return bridge.create_Result_PTLocationAccess_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
+  public final func nativeErrorToNumber(error: Int32) -> bridge.Result_double_ {
+    do {
+      let __result = try self.__implementation.nativeErrorToNumber(error: margelo.nitro.espprovtoolkit.PTError(rawValue: error)!)
+      let __resultCpp = __result
+      return bridge.create_Result_double_(__resultCpp)
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_double_(__exceptionPtr)
     }
   }
 }

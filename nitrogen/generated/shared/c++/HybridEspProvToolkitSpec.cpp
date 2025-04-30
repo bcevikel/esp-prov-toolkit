@@ -32,6 +32,7 @@ namespace margelo::nitro::espprovtoolkit {
       prototype.registerHybridMethod("registerLocationStatusCallback", &HybridEspProvToolkitSpec::registerLocationStatusCallback);
       prototype.registerHybridMethod("removeLocationStatusCallback", &HybridEspProvToolkitSpec::removeLocationStatusCallback);
       prototype.registerHybridMethod("getCurrentLocationStatus", &HybridEspProvToolkitSpec::getCurrentLocationStatus);
+      prototype.registerHybridMethod("nativeErrorToNumber", &HybridEspProvToolkitSpec::nativeErrorToNumber);
     });
   }
 

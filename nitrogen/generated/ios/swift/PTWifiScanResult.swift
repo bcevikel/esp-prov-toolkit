@@ -18,7 +18,7 @@ public extension PTWifiScanResult {
   /**
    * Create a new instance of `PTWifiScanResult`.
    */
-  init(success: Bool, networks: [PTWifiEntry]?, error: PTError?) {
+  init(success: Bool, networks: [PTWifiEntry]?, error: Double?) {
     self.init(success, { () -> bridge.std__optional_std__vector_PTWifiEntry__ in
       if let __unwrappedValue = networks {
         return bridge.create_std__optional_std__vector_PTWifiEntry__({ () -> bridge.std__vector_PTWifiEntry_ in
@@ -31,9 +31,9 @@ public extension PTWifiScanResult {
       } else {
         return .init()
       }
-    }(), { () -> bridge.std__optional_PTError_ in
+    }(), { () -> bridge.std__optional_double_ in
       if let __unwrappedValue = error {
-        return bridge.create_std__optional_PTError_(__unwrappedValue)
+        return bridge.create_std__optional_double_(__unwrappedValue)
       } else {
         return .init()
       }
@@ -80,16 +80,16 @@ public extension PTWifiScanResult {
     }
   }
   
-  var error: PTError? {
+  var error: Double? {
     @inline(__always)
     get {
-      return self.__error.has_value() ? self.__error.pointee : nil
+      return self.__error.value
     }
     @inline(__always)
     set {
-      self.__error = { () -> bridge.std__optional_PTError_ in
+      self.__error = { () -> bridge.std__optional_double_ in
         if let __unwrappedValue = newValue {
-          return bridge.create_std__optional_PTError_(__unwrappedValue)
+          return bridge.create_std__optional_double_(__unwrappedValue)
         } else {
           return .init()
         }

@@ -18,12 +18,10 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `PTError` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTError; }
+
 
 #include <optional>
 #include <string>
-#include "PTError.hpp"
 
 namespace margelo::nitro::espprovtoolkit {
 
@@ -34,11 +32,11 @@ namespace margelo::nitro::espprovtoolkit {
   public:
     bool success     SWIFT_PRIVATE;
     std::optional<std::string> str     SWIFT_PRIVATE;
-    std::optional<PTError> error     SWIFT_PRIVATE;
+    std::optional<double> error     SWIFT_PRIVATE;
 
   public:
     PTStringResult() = default;
-    explicit PTStringResult(bool success, std::optional<std::string> str, std::optional<PTError> error): success(success), str(str), error(error) {}
+    explicit PTStringResult(bool success, std::optional<std::string> str, std::optional<double> error): success(success), str(str), error(error) {}
   };
 
 } // namespace margelo::nitro::espprovtoolkit
@@ -55,14 +53,14 @@ namespace margelo::nitro {
       return PTStringResult(
         JSIConverter<bool>::fromJSI(runtime, obj.getProperty(runtime, "success")),
         JSIConverter<std::optional<std::string>>::fromJSI(runtime, obj.getProperty(runtime, "str")),
-        JSIConverter<std::optional<PTError>>::fromJSI(runtime, obj.getProperty(runtime, "error"))
+        JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, "error"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const PTStringResult& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "success", JSIConverter<bool>::toJSI(runtime, arg.success));
       obj.setProperty(runtime, "str", JSIConverter<std::optional<std::string>>::toJSI(runtime, arg.str));
-      obj.setProperty(runtime, "error", JSIConverter<std::optional<PTError>>::toJSI(runtime, arg.error));
+      obj.setProperty(runtime, "error", JSIConverter<std::optional<double>>::toJSI(runtime, arg.error));
       return obj;
     }
     static inline bool canConvert(jsi::Runtime& runtime, const jsi::Value& value) {
@@ -72,7 +70,7 @@ namespace margelo::nitro {
       jsi::Object obj = value.getObject(runtime);
       if (!JSIConverter<bool>::canConvert(runtime, obj.getProperty(runtime, "success"))) return false;
       if (!JSIConverter<std::optional<std::string>>::canConvert(runtime, obj.getProperty(runtime, "str"))) return false;
-      if (!JSIConverter<std::optional<PTError>>::canConvert(runtime, obj.getProperty(runtime, "error"))) return false;
+      if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, "error"))) return false;
       return true;
     }
   };

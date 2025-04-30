@@ -35,6 +35,8 @@ namespace margelo::nitro::espprovtoolkit { struct PTBooleanResult; }
 namespace margelo::nitro::espprovtoolkit { struct PTStringResult; }
 // Forward declaration of `PTLocationAccess` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
+// Forward declaration of `PTError` to properly resolve imports.
+namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 
 #include <NitroModules/Promise.hpp>
 #include "PTSearchResult.hpp"
@@ -51,6 +53,7 @@ namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
 #include "PTStringResult.hpp"
 #include <functional>
 #include "PTLocationAccess.hpp"
+#include "PTError.hpp"
 
 namespace margelo::nitro::espprovtoolkit {
 
@@ -98,9 +101,10 @@ namespace margelo::nitro::espprovtoolkit {
       virtual PTStringResult getIPv4AddressOfESPDevice(const std::string& deviceName) = 0;
       virtual PTStringResult getCurrentNetworkSSID() = 0;
       virtual void requestLocationPermission() = 0;
-      virtual int64_t registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) = 0;
-      virtual bool removeLocationStatusCallback(int64_t id) = 0;
+      virtual double registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) = 0;
+      virtual bool removeLocationStatusCallback(double id) = 0;
       virtual PTLocationAccess getCurrentLocationStatus() = 0;
+      virtual double nativeErrorToNumber(PTError error) = 0;
 
     protected:
       // Hybrid Setup

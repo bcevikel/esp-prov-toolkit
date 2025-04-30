@@ -22,7 +22,7 @@ data class PTSessionResult
   constructor(
     val success: Boolean,
     val status: PTSessionStatus?,
-    val error: PTError?
+    val error: Double?
   ) {
   /* main constructor */
 }

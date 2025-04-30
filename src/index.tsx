@@ -16,11 +16,11 @@ const EspProvToolkitHybridObject =
   NitroModules.createHybridObject<EspProvToolkit>('EspProvToolkit');
 
 async function handleError<T>(
-  promise: Promise<{ success: boolean; error?: PTError } & T>
+  promise: Promise<{ success: boolean; error?: number } & T>
 ): Promise<T> {
   const result = await promise;
   if (!result.success && result.error) {
-    throw new PTException(result.error);
+    throw new PTException(result.error as PTError);
   }
   return result as T;
 }
@@ -167,11 +167,11 @@ export function requestLocationPermission(): void {
 
 export function registerLocationStatusCallback(
   callback: (access: PTLocationAccess) => boolean
-): bigint {
+): number {
   return EspProvToolkitHybridObject.registerLocationStatusCallback(callback);
 }
 
-export function removeLocationStatusCallback(id: bigint): boolean {
+export function removeLocationStatusCallback(id: number): boolean {
   return EspProvToolkitHybridObject.removeLocationStatusCallback(id);
 }
 

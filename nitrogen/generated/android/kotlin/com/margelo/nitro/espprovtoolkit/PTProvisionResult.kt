@@ -22,7 +22,7 @@ data class PTProvisionResult
   constructor(
     val success: Boolean,
     val status: PTProvisionStatus?,
-    val error: PTError?
+    val error: Double?
   ) {
   /* main constructor */
 }

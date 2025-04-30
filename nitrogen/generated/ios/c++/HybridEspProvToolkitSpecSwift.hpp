@@ -14,8 +14,6 @@ namespace EspProvToolkit { class HybridEspProvToolkitSpec_cxx; }
 
 // Forward declaration of `PTSearchResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTSearchResult; }
-// Forward declaration of `PTError` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 // Forward declaration of `PTTransport` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { enum class PTTransport; }
 // Forward declaration of `PTSecurity` to properly resolve imports.
@@ -44,13 +42,14 @@ namespace margelo::nitro::espprovtoolkit { struct PTBooleanResult; }
 namespace margelo::nitro::espprovtoolkit { struct PTStringResult; }
 // Forward declaration of `PTLocationAccess` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
+// Forward declaration of `PTError` to properly resolve imports.
+namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 
 #include <NitroModules/Promise.hpp>
 #include "PTSearchResult.hpp"
 #include <optional>
 #include <vector>
 #include <string>
-#include "PTError.hpp"
 #include "PTTransport.hpp"
 #include "PTSecurity.hpp"
 #include "PTResult.hpp"
@@ -66,6 +65,7 @@ namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
 #include "PTStringResult.hpp"
 #include <functional>
 #include "PTLocationAccess.hpp"
+#include "PTError.hpp"
 
 #include "EspProvToolkit-Swift-Cxx-Umbrella.hpp"
 
@@ -222,7 +222,7 @@ namespace margelo::nitro::espprovtoolkit {
         std::rethrow_exception(__result.error());
       }
     }
-    inline int64_t registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) override {
+    inline double registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) override {
       auto __result = _swiftPart.registerLocationStatusCallback(callback);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
@@ -230,7 +230,7 @@ namespace margelo::nitro::espprovtoolkit {
       auto __value = std::move(__result.value());
       return __value;
     }
-    inline bool removeLocationStatusCallback(int64_t id) override {
+    inline bool removeLocationStatusCallback(double id) override {
       auto __result = _swiftPart.removeLocationStatusCallback(std::forward<decltype(id)>(id));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
@@ -240,6 +240,14 @@ namespace margelo::nitro::espprovtoolkit {
     }
     inline PTLocationAccess getCurrentLocationStatus() override {
       auto __result = _swiftPart.getCurrentLocationStatus();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline double nativeErrorToNumber(PTError error) override {
+      auto __result = _swiftPart.nativeErrorToNumber(static_cast<int>(error));
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

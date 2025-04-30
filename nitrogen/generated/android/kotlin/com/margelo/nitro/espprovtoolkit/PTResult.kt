@@ -21,7 +21,7 @@ data class PTResult
   @Keep
   constructor(
     val success: Boolean,
-    val error: PTError?
+    val error: Double?
   ) {
   /* main constructor */
 }

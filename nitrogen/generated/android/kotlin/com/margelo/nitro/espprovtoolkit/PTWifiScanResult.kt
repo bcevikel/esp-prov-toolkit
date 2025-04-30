@@ -22,7 +22,7 @@ data class PTWifiScanResult
   constructor(
     val success: Boolean,
     val networks: Array<PTWifiEntry>?,
-    val error: PTError?
+    val error: Double?
   ) {
   /* main constructor */
 }

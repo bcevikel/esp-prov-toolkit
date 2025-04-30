@@ -72,6 +72,12 @@ export function getErrorDescription(errorCode: PTError): string {
       return 'Unknown runtime error';
     case PTError.PROV_TIMED_OUT_ERROR:
       return 'Timed out while waiting for response.';
+    case PTError.BLE_SEARCH_ERROR:
+      return 'BLE search failed.';
+    case PTError.ESP_INSUFFICIENT_PERMISSIONS:
+      return 'Insufficient permissions for this operation.';
+    case PTError.BLE_ADAPTER_NOT_AVAILABLE:
+      return 'Bluetooth adapter of device is not available.';
     default:
       return 'Unknown error';
   }

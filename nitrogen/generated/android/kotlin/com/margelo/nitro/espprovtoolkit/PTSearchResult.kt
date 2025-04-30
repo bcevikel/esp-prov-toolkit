@@ -22,7 +22,7 @@ data class PTSearchResult
   constructor(
     val success: Boolean,
     val deviceNames: Array<String>?,
-    val error: PTError?
+    val error: Double?
   ) {
   /* main constructor */
 }

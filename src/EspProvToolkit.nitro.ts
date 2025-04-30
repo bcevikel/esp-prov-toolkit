@@ -12,6 +12,7 @@ import type {
   PTLocationAccess,
   PTDeviceResult,
 } from './EspProvToolkit.types';
+import type { PTError } from '../lib/typescript/src';
 
 export interface EspProvToolkit
   extends HybridObject<{ ios: 'swift'; android: 'kotlin' }> {
@@ -66,9 +67,11 @@ export interface EspProvToolkit
 
   registerLocationStatusCallback(
     callback: (level: PTLocationAccess) => boolean
-  ): bigint;
+  ): number;
 
-  removeLocationStatusCallback(id: bigint): boolean;
+  removeLocationStatusCallback(id: number): boolean;
 
   getCurrentLocationStatus(): PTLocationAccess;
+
+  nativeErrorToNumber(error: PTError): number;
 }

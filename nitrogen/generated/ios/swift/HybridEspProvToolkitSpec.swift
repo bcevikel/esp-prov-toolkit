@@ -29,9 +29,10 @@ public protocol HybridEspProvToolkitSpec_protocol: HybridObject {
   func getIPv4AddressOfESPDevice(deviceName: String) throws -> PTStringResult
   func getCurrentNetworkSSID() throws -> PTStringResult
   func requestLocationPermission() throws -> Void
-  func registerLocationStatusCallback(callback: @escaping (_ level: PTLocationAccess) -> Promise<Bool>) throws -> Int64
-  func removeLocationStatusCallback(id: Int64) throws -> Bool
+  func registerLocationStatusCallback(callback: @escaping (_ level: PTLocationAccess) -> Promise<Bool>) throws -> Double
+  func removeLocationStatusCallback(id: Double) throws -> Bool
   func getCurrentLocationStatus() throws -> PTLocationAccess
+  func nativeErrorToNumber(error: PTError) throws -> Double
 }
 
 /// See ``HybridEspProvToolkitSpec``

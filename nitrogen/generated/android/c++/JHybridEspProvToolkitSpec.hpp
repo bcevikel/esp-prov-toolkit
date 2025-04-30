@@ -66,9 +66,10 @@ namespace margelo::nitro::espprovtoolkit {
     PTStringResult getIPv4AddressOfESPDevice(const std::string& deviceName) override;
     PTStringResult getCurrentNetworkSSID() override;
     void requestLocationPermission() override;
-    int64_t registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) override;
-    bool removeLocationStatusCallback(int64_t id) override;
+    double registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) override;
+    bool removeLocationStatusCallback(double id) override;
     PTLocationAccess getCurrentLocationStatus() override;
+    double nativeErrorToNumber(PTError error) override;
 
   private:
     friend HybridBase;

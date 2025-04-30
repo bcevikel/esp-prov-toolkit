@@ -100,22 +100,26 @@ abstract class HybridEspProvToolkitSpec: HybridObject() {
   @Keep
   abstract fun requestLocationPermission(): Unit
   
-  abstract fun registerLocationStatusCallback(callback: (level: PTLocationAccess) -> Promise<Boolean>): Long
+  abstract fun registerLocationStatusCallback(callback: (level: PTLocationAccess) -> Promise<Boolean>): Double
   
   @DoNotStrip
   @Keep
-  private fun registerLocationStatusCallback_cxx(callback: Func_std__shared_ptr_Promise_bool___PTLocationAccess): Long {
+  private fun registerLocationStatusCallback_cxx(callback: Func_std__shared_ptr_Promise_bool___PTLocationAccess): Double {
     val __result = registerLocationStatusCallback(callback)
     return __result
   }
   
   @DoNotStrip
   @Keep
-  abstract fun removeLocationStatusCallback(id: Long): Boolean
+  abstract fun removeLocationStatusCallback(id: Double): Boolean
   
   @DoNotStrip
   @Keep
   abstract fun getCurrentLocationStatus(): PTLocationAccess
+  
+  @DoNotStrip
+  @Keep
+  abstract fun nativeErrorToNumber(error: PTError): Double
 
   private external fun initHybrid(): HybridData
 

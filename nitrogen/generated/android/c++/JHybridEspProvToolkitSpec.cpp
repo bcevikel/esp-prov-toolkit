@@ -9,8 +9,6 @@
 
 // Forward declaration of `PTSearchResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTSearchResult; }
-// Forward declaration of `PTError` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 // Forward declaration of `PTResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTResult; }
 // Forward declaration of `PTDeviceResult` to properly resolve imports.
@@ -39,6 +37,8 @@ namespace margelo::nitro::espprovtoolkit { struct PTBooleanResult; }
 namespace margelo::nitro::espprovtoolkit { struct PTStringResult; }
 // Forward declaration of `PTLocationAccess` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
+// Forward declaration of `PTError` to properly resolve imports.
+namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 
 #include <NitroModules/Promise.hpp>
 #include "PTSearchResult.hpp"
@@ -47,8 +47,6 @@ namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
 #include <optional>
 #include <vector>
 #include <string>
-#include "PTError.hpp"
-#include "JPTError.hpp"
 #include "PTResult.hpp"
 #include "JPTResult.hpp"
 #include "PTDeviceResult.hpp"
@@ -79,6 +77,8 @@ namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
 #include "JPTLocationAccess.hpp"
 #include <functional>
 #include "JFunc_std__shared_ptr_Promise_bool___PTLocationAccess.hpp"
+#include "PTError.hpp"
+#include "JPTError.hpp"
 
 namespace margelo::nitro::espprovtoolkit {
 
@@ -251,13 +251,13 @@ namespace margelo::nitro::espprovtoolkit {
     static const auto method = javaClassStatic()->getMethod<void()>("requestLocationPermission");
     method(_javaPart);
   }
-  int64_t JHybridEspProvToolkitSpec::registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) {
-    static const auto method = javaClassStatic()->getMethod<int64_t(jni::alias_ref<JFunc_std__shared_ptr_Promise_bool___PTLocationAccess::javaobject> /* callback */)>("registerLocationStatusCallback_cxx");
+  double JHybridEspProvToolkitSpec::registerLocationStatusCallback(const std::function<std::shared_ptr<Promise<bool>>(PTLocationAccess /* level */)>& callback) {
+    static const auto method = javaClassStatic()->getMethod<double(jni::alias_ref<JFunc_std__shared_ptr_Promise_bool___PTLocationAccess::javaobject> /* callback */)>("registerLocationStatusCallback_cxx");
     auto __result = method(_javaPart, JFunc_std__shared_ptr_Promise_bool___PTLocationAccess_cxx::fromCpp(callback));
     return __result;
   }
-  bool JHybridEspProvToolkitSpec::removeLocationStatusCallback(int64_t id) {
-    static const auto method = javaClassStatic()->getMethod<jboolean(int64_t /* id */)>("removeLocationStatusCallback");
+  bool JHybridEspProvToolkitSpec::removeLocationStatusCallback(double id) {
+    static const auto method = javaClassStatic()->getMethod<jboolean(double /* id */)>("removeLocationStatusCallback");
     auto __result = method(_javaPart, id);
     return static_cast<bool>(__result);
   }
@@ -265,6 +265,11 @@ namespace margelo::nitro::espprovtoolkit {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPTLocationAccess>()>("getCurrentLocationStatus");
     auto __result = method(_javaPart);
     return __result->toCpp();
+  }
+  double JHybridEspProvToolkitSpec::nativeErrorToNumber(PTError error) {
+    static const auto method = javaClassStatic()->getMethod<double(jni::alias_ref<JPTError> /* error */)>("nativeErrorToNumber");
+    auto __result = method(_javaPart, JPTError::fromCpp(error));
+    return __result;
   }
 
 } // namespace margelo::nitro::espprovtoolkit

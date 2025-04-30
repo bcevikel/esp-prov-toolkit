@@ -193,7 +193,10 @@ export function useSoftapProvisioning(
   // handle failure state  - by disconnecting
   useEffect(() => {
     if (provState === 'failure' && deviceName) {
-      disconnect(deviceName);
+      // best effort disconnect
+      try {
+        disconnect(deviceName);
+      } catch (error) {}
     }
   }, [deviceName, provState, disconnect]);
 

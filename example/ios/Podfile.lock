@@ -5,7 +5,7 @@ PODS:
     - ESPProvision/Core (= 3.0.3)
   - ESPProvision/Core (3.0.3):
     - SwiftProtobuf (~> 1.22.0)
-  - EspProvToolkit (0.1.0):
+  - EspProvToolkit (0.1.1):
     - DoubleConversion
     - ESPProvision (= 3.0.3)
     - glog
@@ -2011,7 +2011,7 @@ SPEC CHECKSUMS:
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   ESPProvision: 2368cd8dabef74272f50c76290891a9674035929
-  EspProvToolkit: 932afab111cc1900a966142c843dc63f0423373c
+  EspProvToolkit: 8727d929125dce694dc33f135df0e8cbb8393cd0
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: e32d34492c519a2194ec9d7f5e7a79d11b73f91c
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd

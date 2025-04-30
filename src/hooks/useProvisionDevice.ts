@@ -55,7 +55,6 @@ export function useProvisionDevice(
         softAPPassword,
         username
       );
-
       const result = await connectToESPDevice(deviceName);
       // if we are going to need check manually, lets handle it here
       if (result === PTSessionStatus.CHECK_MANUALLY) {

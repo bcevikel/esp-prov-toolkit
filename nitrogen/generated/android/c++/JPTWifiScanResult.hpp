@@ -10,9 +10,7 @@
 #include <fbjni/fbjni.h>
 #include "PTWifiScanResult.hpp"
 
-#include "JPTError.hpp"
 #include "JPTWifiEntry.hpp"
-#include "PTError.hpp"
 #include "PTWifiEntry.hpp"
 #include <optional>
 #include <string>
@@ -41,8 +39,8 @@ namespace margelo::nitro::espprovtoolkit {
       jboolean success = this->getFieldValue(fieldSuccess);
       static const auto fieldNetworks = clazz->getField<jni::JArrayClass<JPTWifiEntry>>("networks");
       jni::local_ref<jni::JArrayClass<JPTWifiEntry>> networks = this->getFieldValue(fieldNetworks);
-      static const auto fieldError = clazz->getField<JPTError>("error");
-      jni::local_ref<JPTError> error = this->getFieldValue(fieldError);
+      static const auto fieldError = clazz->getField<jni::JDouble>("error");
+      jni::local_ref<jni::JDouble> error = this->getFieldValue(fieldError);
       return PTWifiScanResult(
         static_cast<bool>(success),
         networks != nullptr ? std::make_optional([&]() {
@@ -55,7 +53,7 @@ namespace margelo::nitro::espprovtoolkit {
           }
           return __vector;
         }()) : std::nullopt,
-        error != nullptr ? std::make_optional(error->toCpp()) : std::nullopt
+        error != nullptr ? std::make_optional(error->value()) : std::nullopt
       );
     }
 
@@ -76,7 +74,7 @@ namespace margelo::nitro::espprovtoolkit {
           }
           return __array;
         }() : nullptr,
-        value.error.has_value() ? JPTError::fromCpp(value.error.value()) : nullptr
+        value.error.has_value() ? jni::JDouble::valueOf(value.error.value()) : nullptr
       );
     }
   };

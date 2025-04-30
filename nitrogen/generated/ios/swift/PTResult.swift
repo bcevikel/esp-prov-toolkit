@@ -18,10 +18,10 @@ public extension PTResult {
   /**
    * Create a new instance of `PTResult`.
    */
-  init(success: Bool, error: PTError?) {
-    self.init(success, { () -> bridge.std__optional_PTError_ in
+  init(success: Bool, error: Double?) {
+    self.init(success, { () -> bridge.std__optional_double_ in
       if let __unwrappedValue = error {
-        return bridge.create_std__optional_PTError_(__unwrappedValue)
+        return bridge.create_std__optional_double_(__unwrappedValue)
       } else {
         return .init()
       }
@@ -39,16 +39,16 @@ public extension PTResult {
     }
   }
   
-  var error: PTError? {
+  var error: Double? {
     @inline(__always)
     get {
-      return self.__error.has_value() ? self.__error.pointee : nil
+      return self.__error.value
     }
     @inline(__always)
     set {
-      self.__error = { () -> bridge.std__optional_PTError_ in
+      self.__error = { () -> bridge.std__optional_double_ in
         if let __unwrappedValue = newValue {
-          return bridge.create_std__optional_PTError_(__unwrappedValue)
+          return bridge.create_std__optional_double_(__unwrappedValue)
         } else {
           return .init()
         }

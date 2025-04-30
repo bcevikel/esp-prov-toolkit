@@ -4,9 +4,6 @@ import SystemConfiguration.CaptiveNetwork
 
 
 class EspProvToolkit: HybridEspProvToolkitSpec {
-
-
-  
   // Static dict to store EspDevice instances
   private static var devices : [String : ESPDevice]  = [:];
   
@@ -45,7 +42,7 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         
       } catch let error as ESPDeviceCSSError {
         // propagate this error via our return interface
-        return PTSearchResult(success: false, deviceNames: nil, error: PTError(from: error))
+        return PTSearchResult(success: false, deviceNames: nil, error: Double(PTError(from: error).rawValue))
       }
     }
   }
@@ -72,7 +69,7 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         return PTResult(success: true, error: nil)
         
       } catch (let error as ESPDeviceCSSError){
-        return PTResult(success: false, error: PTError(from: error))
+        return PTResult(success: false, error: Double(PTError(from: error).rawValue))
       }
       
     }
@@ -100,9 +97,9 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         return PTWifiScanResult(success: true, networks: jsWifiList, error: nil)
         
       } catch (let scanError as ESPWiFiScanError){
-        return PTWifiScanResult(success: false, networks: nil, error: PTError(from: scanError))
+        return PTWifiScanResult(success: false, networks: nil, error: Double(PTError(from: scanError).rawValue))
       } catch (let rtimeError as ESPRuntimeError){
-        return PTWifiScanResult(success: false, networks: nil, error: PTError(from: rtimeError))
+        return PTWifiScanResult(success: false, networks: nil, error: Double(PTError(from: rtimeError).rawValue))
       }
       
     }
@@ -121,10 +118,10 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         return PTSessionResult(success: true, status: PTSessionStatus.checkManually, error: nil)
         
       } catch(let sessionErr as ESPSessionError){
-        return PTSessionResult(success: false, status: nil, error: PTError(from: sessionErr))
+        return PTSessionResult(success: false, status: nil, error: Double(PTError(from: sessionErr).rawValue))
         
       } catch (let rtimeError as ESPRuntimeError){
-        return PTSessionResult(success: false, status: nil, error: PTError(from: rtimeError))
+        return PTSessionResult(success: false, status: nil, error: Double(PTError(from: rtimeError).rawValue))
       }
     }
   }
@@ -136,7 +133,7 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
       return PTResult(success: true, error: nil)
       
     } catch(let rtimeError as ESPRuntimeError){
-      return PTResult(success: false, error: PTError(from: rtimeError))
+      return PTResult(success: false, error: Double(PTError(from: rtimeError).rawValue))
     }
   }
   
@@ -148,9 +145,9 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         let sessionStatus = try await device.initialiseSessionAsync(sessionPath: nil)
         return PTSessionResult(success: true, status: PTSessionStatus(from: sessionStatus), error: nil)
       } catch(let sessionError as ESPSessionError){
-        return PTSessionResult(success: false, status: nil, error: PTError(from: sessionError))
+        return PTSessionResult(success: false, status: nil, error: Double(PTError(from: sessionError).rawValue))
       } catch(let rtimeError as ESPRuntimeError){
-        return PTSessionResult(success: false, status: nil, error: PTError(from: rtimeError))
+        return PTSessionResult(success: false, status: nil, error: Double(PTError(from: rtimeError).rawValue))
       }    }
   }
   
@@ -163,9 +160,9 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         return PTProvisionResult(success: true, status: PTProvisionStatus(from: provStatus), error: nil)
       }
       catch(let provError as ESPProvisionError){
-        return PTProvisionResult(success: false, status: nil, error: PTError(from: provError))
+        return PTProvisionResult(success: false, status: nil, error: Double(PTError(from: provError).rawValue))
       } catch (let rtimeError as ESPRuntimeError){
-        return PTProvisionResult(success: false, status: nil, error: PTError(from: rtimeError))
+        return PTProvisionResult(success: false, status: nil, error: Double(PTError(from: rtimeError).rawValue))
       }
     }
   }
@@ -175,7 +172,7 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
       let device = try EspProvToolkit.getDeviceEntry(forKey: deviceName)
       return PTBooleanResult(success: true, result: device.isSessionEstablished(), error: nil)
     } catch (let rtimeError as ESPRuntimeError){
-      return PTBooleanResult(success: false, result: nil, error: PTError(from: rtimeError))
+      return PTBooleanResult(success: false, result: nil, error: Double(PTError(from: rtimeError).rawValue))
     }
   }
   
@@ -193,9 +190,9 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         return PTStringResult(success: true, str: resp_base64, error: nil)
 
       } catch (let sessionError as ESPSessionError){
-        return PTStringResult(success: false, str: nil, error: PTError(from : sessionError))
+        return PTStringResult(success: false, str: nil, error: Double(PTError(from : sessionError).rawValue))
       } catch (let rtimeError as ESPRuntimeError){
-        return PTStringResult(success: false, str: nil, error: PTError(from: rtimeError))
+        return PTStringResult(success: false, str: nil, error: Double(PTError(from: rtimeError).rawValue))
       }
     }
   }
@@ -205,7 +202,7 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
       let device = try EspProvToolkit.getDeviceEntry(forKey: deviceName)
       return PTStringResult(success: true, str: device.wifiConnectedIp4Addr(), error: nil)
     } catch {
-      return PTStringResult(success: false, str: nil, error: PTError.runtimeUnknownError)
+      return PTStringResult(success: false, str: nil, error: Double(PTError.runtimeUnknownError.rawValue))
     }
   }
   
@@ -219,7 +216,7 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         }
       }
     }
-    return PTStringResult(success: false, str: nil, error: PTError.runtimeUnknownError)
+    return PTStringResult(success: false, str: nil, error: Double(PTError.runtimeUnknownError.rawValue))
   }
   
   
@@ -228,13 +225,18 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
   }
   
   
-  func registerLocationStatusCallback(callback: @escaping (PTLocationAccess) -> NitroModules.Promise<Bool>) throws -> Int64 {
-    return Int64(LocationHelper.shared.registerLocationCallback(callback: callback))
+  func registerLocationStatusCallback(callback: @escaping (PTLocationAccess) -> NitroModules.Promise<Bool>) throws -> Double {
+    return Double(LocationHelper.shared.registerLocationCallback(callback: callback))
   }
   
-  func removeLocationStatusCallback(id: Int64) throws -> Bool {
+  func removeLocationStatusCallback(id: Double) throws -> Bool {
     return LocationHelper.shared.removeLocationCallback(id: Int(id))
   }
+  
+  func nativeErrorToNumber(error: PTError) throws -> Double {
+    return Double(error.rawValue)
+  }
+  
   
   func getCurrentLocationStatus() throws -> PTLocationAccess {
     return LocationHelper.shared.getCurrentLocationAcces()

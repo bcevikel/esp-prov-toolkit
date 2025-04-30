@@ -36,7 +36,7 @@ export function useLocationPermissions() {
   const [locationAccess, setLocationAccess] = useState<PTLocationAccess>(
     getCurrentLocationStatus()
   );
-  const callbackIdRef = useRef<bigint | null>(null);
+  const callbackIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     try {

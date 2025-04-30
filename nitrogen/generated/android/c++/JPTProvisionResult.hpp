@@ -10,9 +10,7 @@
 #include <fbjni/fbjni.h>
 #include "PTProvisionResult.hpp"
 
-#include "JPTError.hpp"
 #include "JPTProvisionStatus.hpp"
-#include "PTError.hpp"
 #include "PTProvisionStatus.hpp"
 #include <optional>
 
@@ -39,12 +37,12 @@ namespace margelo::nitro::espprovtoolkit {
       jboolean success = this->getFieldValue(fieldSuccess);
       static const auto fieldStatus = clazz->getField<JPTProvisionStatus>("status");
       jni::local_ref<JPTProvisionStatus> status = this->getFieldValue(fieldStatus);
-      static const auto fieldError = clazz->getField<JPTError>("error");
-      jni::local_ref<JPTError> error = this->getFieldValue(fieldError);
+      static const auto fieldError = clazz->getField<jni::JDouble>("error");
+      jni::local_ref<jni::JDouble> error = this->getFieldValue(fieldError);
       return PTProvisionResult(
         static_cast<bool>(success),
         status != nullptr ? std::make_optional(status->toCpp()) : std::nullopt,
-        error != nullptr ? std::make_optional(error->toCpp()) : std::nullopt
+        error != nullptr ? std::make_optional(error->value()) : std::nullopt
       );
     }
 
@@ -57,7 +55,7 @@ namespace margelo::nitro::espprovtoolkit {
       return newInstance(
         value.success,
         value.status.has_value() ? JPTProvisionStatus::fromCpp(value.status.value()) : nullptr,
-        value.error.has_value() ? JPTError::fromCpp(value.error.value()) : nullptr
+        value.error.has_value() ? jni::JDouble::valueOf(value.error.value()) : nullptr
       );
     }
   };
