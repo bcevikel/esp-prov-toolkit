@@ -74,6 +74,22 @@ npm install react-native-nitro-modules@^0.25.2
 cd ios && pod install
 ```
 
+2. Add the following capabilities to your Xcode project:
+   - Hotspot Configuration
+   - Access WiFi Information
+
+3. Add the following keys to your `Info.plist`:
+```xml
+<key>NSBluetoothAlwaysUsageDescription</key>
+<string>Connect with BLE Compatible devices for Provisioning</string>
+<key>NSBluetoothPeripheralUsageDescription</key>
+<string>Connect with BLE Compatible devices for Provisioning</string>
+<key>NSLocalNetworkUsageDescription</key>
+<string>This app needs access to your local network to discover ESP devices</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need this to access WiFi iface</string>
+```
+
 ### Android Setup
 
 1. Add the following to your `android/build.gradle`:
@@ -84,6 +100,24 @@ allprojects {
         maven { url 'https://jitpack.io' }
     }
 }
+```
+
+2. Add the following permissions to your `AndroidManifest.xml`:
+```xml
+<!-- Request legacy Bluetooth permissions on older devices. -->
+<uses-permission android:name="android.permission.BLUETOOTH"
+    android:maxSdkVersion="30" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+    android:maxSdkVersion="30" />
+
+<!-- BLE -->
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+<!-- Needed for SSID monitoring and Wifi Scanning & Configuring -->
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 ```
 
 ## 🚀 Basic Usage
