@@ -59,6 +59,14 @@ yarn add react-native-esp-prov-toolkit
 npm install react-native-esp-prov-toolkit
 ```
 
+### Installing Peer Dependencies
+
+```bash
+yarn add react-native-nitro-modules@^0.25.2
+# or
+npm install react-native-nitro-modules@^0.25.2
+```
+
 ### iOS Setup
 
 1. Run pod install:
