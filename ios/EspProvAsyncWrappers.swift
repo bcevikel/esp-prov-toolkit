@@ -117,45 +117,21 @@ extension ESPDevice {
       var hasResumed = false
       
       return try await withCheckedThrowingContinuation { continuation in
-          // Create a task to handle timeout after configApplied
-          var timeoutTask: Task<Void, Never>? = nil
+
           
           self.provision(ssid: ssid, passPhrase: passcode) { espStatus in
               guard !hasResumed else { return }
               
               switch espStatus {
               case .configApplied:
-                  // Start a timeout task when configApplied is received
-                  timeoutTask = Task {
-                      do {
-                          // Wait for 30 seconds
-                          try await Task.sleep(nanoseconds: 30_000_000_000) // 30 seconds
-                          
-                          // Check if we're still waiting (haven't resumed yet)
-                          if !hasResumed {
-                              hasResumed = true
-                              continuation.resume(throwing: ESPRuntimeError.operationtimedOut)
-                              
-                              // Clean up the task reference
-                              timeoutTask = nil
-                          }
-                      } catch {
-                          // Task was cancelled, do nothing
-                      }
-                  }
+                hasResumed = false
+                // no op
                   
               case .success:
-                  // Cancel the timeout task if it exists
-                  timeoutTask?.cancel()
-                  timeoutTask = nil
-                  
                   hasResumed = true
                   continuation.resume(returning: espStatus)
                   
               case .failure(let espProvError):
-                  // Cancel the timeout task if it exists
-                  timeoutTask?.cancel()
-                  timeoutTask = nil
                   
                   hasResumed = true
                   continuation.resume(throwing: espProvError)

@@ -60,10 +60,6 @@
   },
   "author": "berkcevikel <berk@besayazilim.net> (https://thebians.com)",
   "license": "MIT",
-  "bugs": {
-    "url": "http://example.com/issues"
-  },
-  "homepage": "http://example.com#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
