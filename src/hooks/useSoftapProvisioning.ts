@@ -12,6 +12,7 @@ import {
 } from '../EspProvToolkit.types';
 import { useThrottledCallback } from './useThrottledCallback';
 import { PTException } from '../utils';
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export function useSoftapProvisioning(
   scanInterval: number,
@@ -94,15 +95,25 @@ export function useSoftapProvisioning(
 
   // Handle location permissions
   useEffect(() => {
-    // if it is not determined, try asking
-    if (locationAccess === PTLocationAccess.NOT_DETERMINED) {
-      requestLocationPermission();
+    if (appState !== 'inactive') {
+      // if it is not determined, try asking
+      if (locationAccess === PTLocationAccess.NOT_DETERMINED) {
+        // Introduce a small delay before requesting
+        setTimeout(() => {
+          requestLocationPermission();
+        }, 500);
+      }
+      // if it is denied, call the callback
+      if (locationAccess === PTLocationAccess.DENIED) {
+        handleOnPermCallback();
+      }
     }
-    // if it is denied, call the callback
-    if (locationAccess === PTLocationAccess.DENIED) {
-      handleOnPermCallback();
-    }
-  }, [locationAccess, requestLocationPermission, handleOnPermCallback]);
+  }, [
+    locationAccess,
+    requestLocationPermission,
+    handleOnPermCallback,
+    appState,
+  ]);
 
   // Handle app state changes
   useEffect(() => {
@@ -148,6 +159,8 @@ export function useSoftapProvisioning(
       // try to connect if we are in connecting mode
       if (provState === 'connecting') {
         try {
+          // introduce small delay since this transition happens while switching to app
+          await sleep(500);
           // make sure we still have a valid device name
           if (!deviceName) {
             setProvState('failure');

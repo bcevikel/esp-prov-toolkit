@@ -47,10 +47,12 @@ const openWifiSettings = () => {
 
 // A helper function to alert the user for location services
 const alertForLocationPermssions = () => {
-  Alert.alert('Location Permission', 'This app needs location services to work.', [
-    { text: 'Settings', onPress: () => openAppSettings() },
-    { text: 'OK', style: 'default' },
-  ]);
+  setTimeout(() => {
+    Alert.alert('Location Permission', 'This app needs location services to work.', [
+      { text: 'Settings', onPress: () => openAppSettings() },
+      { text: 'OK', style: 'default' },
+    ]);
+  }, 500);
 };
 
 interface WifiListProps {
