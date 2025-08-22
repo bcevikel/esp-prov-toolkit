@@ -22,9 +22,11 @@ export function useSoftapProvisioning(
   username?: string,
   proofOfPossession?: string,
   softAPPassword?: string,
-  onLocationPermDenied?: () => void
+  onLocationPermDenied?: () => void,
+  autoStart: boolean = true
 ) {
   type ProvStateType =
+    | 'idle'
     | 'searching'
     | 'connecting'
     | 'connected'
@@ -32,7 +34,9 @@ export function useSoftapProvisioning(
     | 'success'
     | 'failure';
   // React States
-  const [provState, setProvState] = useState<ProvStateType>('searching');
+  const [provState, setProvState] = useState<ProvStateType>(
+    autoStart ? 'searching' : 'idle'
+  );
   const [appState, setAppState] = useState<'active' | 'inactive' | 'unknown'>(
     'unknown'
   );
@@ -76,6 +80,12 @@ export function useSoftapProvisioning(
     [setProvError, setProvState]
   );
   // Return Callbacks
+  const start = useCallback(() => {
+    if (provState === 'idle') {
+      setProvState('searching');
+    }
+  }, [provState, setProvState]);
+
   const provisionDevice = useCallback(
     async (ssid: string, pwd: string) => {
       try {
@@ -214,6 +224,7 @@ export function useSoftapProvisioning(
   }, [deviceName, provState, disconnect]);
 
   return {
+    start,
     provState,
     provError,
     provisionDevice,
