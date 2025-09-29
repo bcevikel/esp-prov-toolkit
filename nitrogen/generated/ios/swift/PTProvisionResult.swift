@@ -18,14 +18,8 @@ public extension PTProvisionResult {
   /**
    * Create a new instance of `PTProvisionResult`.
    */
-  init(success: Bool, status: PTProvisionStatus?, error: Double?) {
-    self.init(success, { () -> bridge.std__optional_PTProvisionStatus_ in
-      if let __unwrappedValue = status {
-        return bridge.create_std__optional_PTProvisionStatus_(__unwrappedValue)
-      } else {
-        return .init()
-      }
-    }(), { () -> bridge.std__optional_double_ in
+  init(success: Bool, error: Double?) {
+    self.init(success, { () -> bridge.std__optional_double_ in
       if let __unwrappedValue = error {
         return bridge.create_std__optional_double_(__unwrappedValue)
       } else {
@@ -42,23 +36,6 @@ public extension PTProvisionResult {
     @inline(__always)
     set {
       self.__success = newValue
-    }
-  }
-  
-  var status: PTProvisionStatus? {
-    @inline(__always)
-    get {
-      return self.__status.has_value() ? self.__status.pointee : nil
-    }
-    @inline(__always)
-    set {
-      self.__status = { () -> bridge.std__optional_PTProvisionStatus_ in
-        if let __unwrappedValue = newValue {
-          return bridge.create_std__optional_PTProvisionStatus_(__unwrappedValue)
-        } else {
-          return .init()
-        }
-      }()
     }
   }
   

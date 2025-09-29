@@ -11,7 +11,6 @@ import com.espressif.provisioning.ESPConstants.TransportType
 import com.espressif.provisioning.ESPDevice
 import com.espressif.provisioning.ESPProvisionManager
 import com.espressif.provisioning.listeners.BleScanListener
-import com.facebook.react.bridge.ReactApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext
@@ -34,6 +33,7 @@ import org.greenrobot.eventbus.ThreadMode
 import com.espressif.provisioning.DeviceConnectionEvent
 import com.espressif.provisioning.listeners.ProvisionListener
 import com.espressif.provisioning.listeners.ResponseListener
+import com.facebook.react.bridge.ReactApplicationContext
 
 class Wrappers {
   companion object {
@@ -358,7 +358,7 @@ class Wrappers {
     }
 
     suspend fun provisionEspDevice(espDevice: ESPDevice,
-                                   ssid : String, password : String): PTProvisionStatus
+                                   ssid : String, password : String): Unit
       = suspendCancellableCoroutine  { continuation ->
 
         val provListener = object : ProvisionListener{
@@ -421,7 +421,7 @@ class Wrappers {
 
           override fun deviceProvisioningSuccess() {
             if(continuation.isActive){
-              continuation.resume(PTProvisionStatus.SUCCESS)
+              continuation.resume(Unit)
             }
           }
 

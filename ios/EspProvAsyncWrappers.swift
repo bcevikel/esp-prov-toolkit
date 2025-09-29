@@ -126,6 +126,7 @@ extension ESPDevice {
               case .configApplied:
                 hasResumed = false
                 // no op
+                break
                   
               case .success:
                   hasResumed = true

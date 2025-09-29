@@ -18,11 +18,9 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-// Forward declaration of `PTProvisionStatus` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTProvisionStatus; }
+
 
 #include <optional>
-#include "PTProvisionStatus.hpp"
 
 namespace margelo::nitro::espprovtoolkit {
 
@@ -32,12 +30,11 @@ namespace margelo::nitro::espprovtoolkit {
   struct PTProvisionResult {
   public:
     bool success     SWIFT_PRIVATE;
-    std::optional<PTProvisionStatus> status     SWIFT_PRIVATE;
     std::optional<double> error     SWIFT_PRIVATE;
 
   public:
     PTProvisionResult() = default;
-    explicit PTProvisionResult(bool success, std::optional<PTProvisionStatus> status, std::optional<double> error): success(success), status(status), error(error) {}
+    explicit PTProvisionResult(bool success, std::optional<double> error): success(success), error(error) {}
   };
 
 } // namespace margelo::nitro::espprovtoolkit
@@ -53,14 +50,12 @@ namespace margelo::nitro {
       jsi::Object obj = arg.asObject(runtime);
       return PTProvisionResult(
         JSIConverter<bool>::fromJSI(runtime, obj.getProperty(runtime, "success")),
-        JSIConverter<std::optional<PTProvisionStatus>>::fromJSI(runtime, obj.getProperty(runtime, "status")),
         JSIConverter<std::optional<double>>::fromJSI(runtime, obj.getProperty(runtime, "error"))
       );
     }
     static inline jsi::Value toJSI(jsi::Runtime& runtime, const PTProvisionResult& arg) {
       jsi::Object obj(runtime);
       obj.setProperty(runtime, "success", JSIConverter<bool>::toJSI(runtime, arg.success));
-      obj.setProperty(runtime, "status", JSIConverter<std::optional<PTProvisionStatus>>::toJSI(runtime, arg.status));
       obj.setProperty(runtime, "error", JSIConverter<std::optional<double>>::toJSI(runtime, arg.error));
       return obj;
     }
@@ -70,7 +65,6 @@ namespace margelo::nitro {
       }
       jsi::Object obj = value.getObject(runtime);
       if (!JSIConverter<bool>::canConvert(runtime, obj.getProperty(runtime, "success"))) return false;
-      if (!JSIConverter<std::optional<PTProvisionStatus>>::canConvert(runtime, obj.getProperty(runtime, "status"))) return false;
       if (!JSIConverter<std::optional<double>>::canConvert(runtime, obj.getProperty(runtime, "error"))) return false;
       return true;
     }

@@ -20,8 +20,6 @@ namespace margelo::nitro::espprovtoolkit { struct PTDevice; }
 namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
 // Forward declaration of `PTProvisionResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTProvisionResult; }
-// Forward declaration of `PTProvisionStatus` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTProvisionStatus; }
 // Forward declaration of `PTResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTResult; }
 // Forward declaration of `PTSearchResult` to properly resolve imports.
@@ -52,7 +50,6 @@ namespace EspProvToolkit { class HybridEspProvToolkitSpec_cxx; }
 #include "PTDeviceResult.hpp"
 #include "PTLocationAccess.hpp"
 #include "PTProvisionResult.hpp"
-#include "PTProvisionStatus.hpp"
 #include "PTResult.hpp"
 #include "PTSearchResult.hpp"
 #include "PTSecurity.hpp"
@@ -319,15 +316,6 @@ namespace margelo::nitro::espprovtoolkit::bridge::swift {
   Func_void_PTSessionResult create_Func_void_PTSessionResult(void* _Nonnull swiftClosureWrapper);
   inline Func_void_PTSessionResult_Wrapper wrap_Func_void_PTSessionResult(Func_void_PTSessionResult value) {
     return Func_void_PTSessionResult_Wrapper(std::move(value));
-  }
-  
-  // pragma MARK: std::optional<PTProvisionStatus>
-  /**
-   * Specialized version of `std::optional<PTProvisionStatus>`.
-   */
-  using std__optional_PTProvisionStatus_ = std::optional<PTProvisionStatus>;
-  inline std::optional<PTProvisionStatus> create_std__optional_PTProvisionStatus_(const PTProvisionStatus& value) {
-    return std::optional<PTProvisionStatus>(value);
   }
   
   // pragma MARK: std::shared_ptr<Promise<PTProvisionResult>>

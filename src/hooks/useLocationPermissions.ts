@@ -33,9 +33,14 @@ import {
  * It will properly clean up any registered callbacks when the component unmounts.
  */
 export function useLocationPermissions() {
-  const [locationAccess, setLocationAccess] = useState<PTLocationAccess>(
-    getCurrentLocationStatus()
-  );
+  const [locationAccess, setLocationAccess] = useState<PTLocationAccess>(() => {
+    try {
+      return getCurrentLocationStatus();
+    } catch (error) {
+      console.error('Error getting initial location status:', error);
+      return PTLocationAccess.NOT_DETERMINED;
+    }
+  });
   const callbackIdRef = useRef<number | null>(null);
 
   useEffect(() => {

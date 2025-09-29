@@ -103,6 +103,12 @@ export function useSoftapProvisioning(
     [provision, handleErrors, disconnect, deviceName]
   );
 
+  const reset = useCallback(() => {
+    setProvState('idle');
+    setProvError(undefined);
+    setWifiList([]);
+  }, []);
+
   // Handle location permissions
   useEffect(() => {
     if (appState !== 'inactive') {
@@ -225,6 +231,7 @@ export function useSoftapProvisioning(
 
   return {
     start,
+    reset,
     provState,
     provError,
     provisionDevice,

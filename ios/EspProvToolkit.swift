@@ -157,12 +157,12 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
         let device = try EspProvToolkit.getDeviceEntry(forKey: deviceName)
         
         let provStatus = try await device.provisionAsync(ssid: ssid, passcode: password)
-        return PTProvisionResult(success: true, status: PTProvisionStatus(from: provStatus), error: nil)
+        return PTProvisionResult(success: true, error: nil)
       }
       catch(let provError as ESPProvisionError){
-        return PTProvisionResult(success: false, status: nil, error: Double(PTError(from: provError).rawValue))
+        return PTProvisionResult(success: false, error: Double(PTError(from: provError).rawValue))
       } catch (let rtimeError as ESPRuntimeError){
-        return PTProvisionResult(success: false, status: nil, error: Double(PTError(from: rtimeError).rawValue))
+        return PTProvisionResult(success: false, error: Double(PTError(from: rtimeError).rawValue))
       }
     }
   }

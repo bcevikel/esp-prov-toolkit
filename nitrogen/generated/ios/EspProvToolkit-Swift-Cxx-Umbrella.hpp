@@ -22,8 +22,6 @@ namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 namespace margelo::nitro::espprovtoolkit { enum class PTLocationAccess; }
 // Forward declaration of `PTProvisionResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTProvisionResult; }
-// Forward declaration of `PTProvisionStatus` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTProvisionStatus; }
 // Forward declaration of `PTResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTResult; }
 // Forward declaration of `PTSearchResult` to properly resolve imports.
@@ -51,7 +49,6 @@ namespace margelo::nitro::espprovtoolkit { struct PTWifiScanResult; }
 #include "PTError.hpp"
 #include "PTLocationAccess.hpp"
 #include "PTProvisionResult.hpp"
-#include "PTProvisionStatus.hpp"
 #include "PTResult.hpp"
 #include "PTSearchResult.hpp"
 #include "PTSecurity.hpp"

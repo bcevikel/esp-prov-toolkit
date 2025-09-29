@@ -93,11 +93,6 @@ export enum PTSessionStatus {
   DISCONNECTED,
 }
 
-export enum PTProvisionStatus {
-  SUCCESS,
-  CONFIG_APPLIED,
-}
-
 export enum PTLocationAccess {
   GRANTED,
   DENIED,
@@ -117,7 +112,6 @@ export interface PTResult {
 
 export interface PTProvisionResult {
   success: boolean;
-  status?: PTProvisionStatus;
   error?: number;
 }
 

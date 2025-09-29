@@ -4,7 +4,6 @@ import {
   PTSecurity,
   PTTransport,
   PTSessionStatus,
-  PTProvisionStatus,
   PTError,
   PTLocationAccess,
 } from './EspProvToolkit.types';
@@ -106,11 +105,10 @@ export async function provisionESPDevice(
   deviceName: string,
   ssid: string,
   password: string
-): Promise<PTProvisionStatus> {
-  const result = await handleError(
+): Promise<void> {
+  await handleError(
     EspProvToolkitHybridObject.provisionESPDevice(deviceName, ssid, password)
   );
-  return result.status!;
 }
 
 export function isESPDeviceSessionEstablished(deviceName: string): boolean {
@@ -171,14 +169,7 @@ export function getCurrentLocationStatus(): PTLocationAccess {
 }
 
 // Export enums as values
-export {
-  PTSecurity,
-  PTTransport,
-  PTSessionStatus,
-  PTProvisionStatus,
-  PTLocationAccess,
-  PTError,
-};
+export { PTSecurity, PTTransport, PTSessionStatus, PTLocationAccess, PTError };
 
 // Export types
 export type { PTWifiEntry, PTDevice };

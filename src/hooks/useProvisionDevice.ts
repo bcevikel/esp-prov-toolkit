@@ -2,7 +2,6 @@ import {
   PTSecurity,
   PTTransport,
   PTSessionStatus,
-  PTProvisionStatus,
   createESPDevice,
   connectToESPDevice,
   disconnectFromESPDevice,
@@ -123,12 +122,8 @@ export function useProvisionDevice(
       deviceName: string,
       ssid: string,
       password: string
-    ): Promise<'success' | 'config-applied'> => {
-      const result = await provisionESPDevice(deviceName, ssid, password);
-      if (result === PTProvisionStatus.CONFIG_APPLIED) {
-        return 'config-applied';
-      }
-      return 'success';
+    ): Promise<void> => {
+      await provisionESPDevice(deviceName, ssid, password);
     },
     []
   );

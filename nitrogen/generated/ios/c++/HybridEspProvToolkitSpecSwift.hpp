@@ -34,8 +34,6 @@ namespace margelo::nitro::espprovtoolkit { struct PTSessionResult; }
 namespace margelo::nitro::espprovtoolkit { enum class PTSessionStatus; }
 // Forward declaration of `PTProvisionResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTProvisionResult; }
-// Forward declaration of `PTProvisionStatus` to properly resolve imports.
-namespace margelo::nitro::espprovtoolkit { enum class PTProvisionStatus; }
 // Forward declaration of `PTBooleanResult` to properly resolve imports.
 namespace margelo::nitro::espprovtoolkit { struct PTBooleanResult; }
 // Forward declaration of `PTStringResult` to properly resolve imports.
@@ -60,7 +58,6 @@ namespace margelo::nitro::espprovtoolkit { enum class PTError; }
 #include "PTSessionResult.hpp"
 #include "PTSessionStatus.hpp"
 #include "PTProvisionResult.hpp"
-#include "PTProvisionStatus.hpp"
 #include "PTBooleanResult.hpp"
 #include "PTStringResult.hpp"
 #include <functional>

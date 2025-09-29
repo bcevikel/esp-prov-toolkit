@@ -134,9 +134,10 @@ class EspProvToolkit : HybridEspProvToolkitSpec() {
   ): Promise<PTResult> {
     return Promise.async {
       try {
+        val password = softAPPassword ?: ""
         val device = Wrappers.createDevice(deviceName, ConversionHelpers.convertTransport(transport),
           ConversionHelpers.convertSecurity(security),
-          proofOfPossession,softAPPassword,username)
+          proofOfPossession,password,username)
         // Store the device in our local store
         storeDevice(device,deviceName)
         return@async PTResult(true,null)
@@ -225,9 +226,9 @@ class EspProvToolkit : HybridEspProvToolkitSpec() {
       try {
         val device = getDevice(deviceName)
         val result = Wrappers.provisionEspDevice(device,ssid,password)
-        return@async PTProvisionResult(true,result,null)
+        return@async PTProvisionResult(true,null)
       } catch (e : Exception){
-        return@async  PTProvisionResult(false,null, handleExceptions(e).toDouble())
+        return@async  PTProvisionResult(false, handleExceptions(e).toDouble())
       }
     }
   }

@@ -121,17 +121,6 @@ extension PTSessionStatus{
   }
 }
 
-extension PTProvisionStatus{
-  init(from provStatus : ESPProvisionStatus){
-    switch provStatus {
-    case .success:
-      self = PTProvisionStatus.success
-    case .failure:
-      self = PTProvisionStatus.success
-    case .configApplied:
-      self = PTProvisionStatus.configApplied
-    }
-  }
-}
+
 
 
