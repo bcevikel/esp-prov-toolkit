@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { NotificationBar, type NotificationType } from '../components/NotificationBar';
 import { PasswordInput } from '../components/PasswordInput';
-import { provisionESPDevice, PTProvisionStatus } from 'react-native-esp-prov-toolkit';
+import { provisionESPDevice } from 'react-native-esp-prov-toolkit';
 
 export function ProvisionDeviceScreen() {
   const [deviceName, setDeviceName] = useState('');
@@ -30,21 +30,13 @@ export function ProvisionDeviceScreen() {
   const handleProvision = async () => {
     try {
       setIsLoading(true);
-      const status = await provisionESPDevice(deviceName, ssid, password);
+      await provisionESPDevice(deviceName, ssid, password);
 
-      if (status === PTProvisionStatus.SUCCESS) {
-        setNotification({
-          message: 'Provisioning success',
-          type: 'success',
-          visible: true,
-        });
-      } else if (status === PTProvisionStatus.CONFIG_APPLIED) {
-        setNotification({
-          message: 'Provisioning config applied',
-          type: 'info',
-          visible: true,
-        });
-      }
+      setNotification({
+        message: 'Provisioning success',
+        type: 'success',
+        visible: true,
+      });
     } catch (error) {
       setNotification({
         message: error instanceof Error ? error.message : 'Failed to provision device',
