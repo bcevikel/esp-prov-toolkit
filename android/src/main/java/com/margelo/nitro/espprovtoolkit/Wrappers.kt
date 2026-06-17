@@ -111,7 +111,7 @@ class Wrappers {
       }
       // Must switch to Main thread for BLE operations
       withContext(Dispatchers.Main) {
-        ESPProvisionManager.getInstance(getContext()).searchBleEspDevices(bleListener)
+        ESPProvisionManager.getInstance(getContext()?.applicationContext).searchBleEspDevices(bleListener)
       }
 
       // Get the results from the channel
@@ -128,7 +128,7 @@ class Wrappers {
         // If somehow we did not stop the scan via callback, make sure we do.
         if(!scanCompleted.getAndSet(true)){
           withContext(Dispatchers.Main) {
-            ESPProvisionManager.getInstance(getContext())
+            ESPProvisionManager.getInstance(getContext()?.applicationContext)
               .stopBleScan()
           }
         }
@@ -141,7 +141,7 @@ class Wrappers {
     fun stopBleSearch() {
       // Run on Main thread using handler instead of coroutine context
       Handler(Looper.getMainLooper()).post {
-        ESPProvisionManager.getInstance(getContext()).stopBleScan()
+        ESPProvisionManager.getInstance(getContext()?.applicationContext).stopBleScan()
       }
     }
 
@@ -185,7 +185,7 @@ class Wrappers {
       // Launch on Main dispatcher since ESP operations require the main thread
       CoroutineScope(Dispatchers.Main).launch {
         try {
-          ESPProvisionManager.getInstance(context).searchWiFiEspDevices(softapListener)
+          ESPProvisionManager.getInstance(context.applicationContext).searchWiFiEspDevices(softapListener)
         } catch (e: Exception) {
           // Handle any exceptions during the start of scanning
           if (continuation.isActive) {
@@ -204,7 +204,7 @@ class Wrappers {
       username: String?
     ): ESPDevice = withContext(Dispatchers.Main) {
       // Create the device on the main thread
-      val device = ESPProvisionManager.getInstance(getContext()).createESPDevice(transport, security)
+      val device = ESPProvisionManager.getInstance(getContext()?.applicationContext).createESPDevice(transport, security)
 
       // These property assignments should be fine on the main thread too
       device.proofOfPossession = proofOfPossession

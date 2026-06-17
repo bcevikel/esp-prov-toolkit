@@ -18,9 +18,11 @@ import android.util.Base64
 class EspProvToolkit : HybridEspProvToolkitSpec() {
   companion object{
     const val TAG = "EspProvToolkit"
-    var locationHelper : LocationPermissionHelper? = null
     var devices : MutableMap<String,ESPDevice> = mutableMapOf()
   }
+
+  private var locationHelper: LocationPermissionHelper? = null
+
   private fun storeDevice(device: ESPDevice, key: String){
     devices[key] = device
   }
@@ -33,10 +35,13 @@ class EspProvToolkit : HybridEspProvToolkitSpec() {
     val ctx = Wrappers.getContext()
       ?: throw IllegalStateException("Wrapper's ReactContext cannot be null.")
 
-    if(locationHelper == null){
-      locationHelper = LocationPermissionHelper(ctx)
+    val existing = locationHelper
+    if (existing == null || existing.context != ctx) {
+      val newHelper = LocationPermissionHelper(ctx)
+      locationHelper = newHelper
+      return newHelper
     }
-    return locationHelper as LocationPermissionHelper
+    return existing
   }
 
   private fun getContext(): ReactApplicationContext{

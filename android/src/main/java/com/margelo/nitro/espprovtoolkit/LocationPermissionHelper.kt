@@ -1,82 +1,82 @@
 package com.margelo.nitro.espprovtoolkit
+
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.DefaultLifecycleObserver
-import com.facebook.react.bridge.ReactApplicationContext
 import androidx.lifecycle.LifecycleOwner
+import com.facebook.react.bridge.ReactApplicationContext
 import com.margelo.nitro.core.Promise
 import android.os.Handler
 import android.os.Looper
+
 typealias LocationStatusCallback = (level: PTLocationAccess) -> Promise<Boolean>
 
-class LocationPermissionHelper(val context : ReactApplicationContext){
+class LocationPermissionHelper(val context: ReactApplicationContext) {
 
-  private val activity: AppCompatActivity
-  private var cbCount : Int = 0
-  private val callbacks : MutableMap<Int,LocationStatusCallback> = mutableMapOf()
-  private val mainHandler = Handler(Looper.getMainLooper())
+    private var cbCount: Int = 0
+    private val callbacks: MutableMap<Int, LocationStatusCallback> = mutableMapOf()
+    private val mainHandler = Handler(Looper.getMainLooper())
 
-  init {
-    // handle getting AppCompatActivity from ReactContext
-    val currentActivity = context.currentActivity
-    activity = currentActivity as? AppCompatActivity
-      ?: throw IllegalStateException(
-        "Current activity is not an AppCompatActivity. Found: ${currentActivity?.javaClass?.name}"
-      )
-    // create, and register the observer for LC events
-    val lcObserver = object : DefaultLifecycleObserver {
-      override fun onResume(owner: LifecycleOwner) {
-        // call our classes on resume
-        handleOnResume()
-      }
+    private val lcObserver = object : DefaultLifecycleObserver {
+        override fun onResume(owner: LifecycleOwner) {
+            handleOnResume()
+        }
     }
-    // Register observer on main thread
-    mainHandler.post {
-      activity.lifecycle.addObserver(lcObserver)
+
+    init {
+        // Register lifecycle observer on main thread
+        // Activity reference is not stored — only used transiently here
+        mainHandler.post {
+            (context.currentActivity as? AppCompatActivity)
+                ?.lifecycle
+                ?.addObserver(lcObserver)
+        }
     }
-  }
 
-  fun registerCallback(callback : LocationStatusCallback): Int {
-    val curId = cbCount
-    cbCount += 1
-    callbacks[curId] = callback
-    return curId
-  }
-
-  fun removeCallback(id : Int) : Boolean{
-    if(callbacks.containsKey(id)){
-      callbacks.remove(id)
-      return true
+    private fun getActivity(): AppCompatActivity {
+        return context.currentActivity as? AppCompatActivity
+            ?: throw IllegalStateException(
+                "Current activity is not an AppCompatActivity. Found: ${context.currentActivity?.javaClass?.name}"
+            )
     }
-    return false
-  }
 
-  fun getCurrentPermission() : PTLocationAccess{
-    val status = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
-    // if it is granted, we can safely return
-    if(status == PackageManager.PERMISSION_GRANTED){
-      return PTLocationAccess.GRANTED
+    fun registerCallback(callback: LocationStatusCallback): Int {
+        val curId = cbCount
+        cbCount += 1
+        callbacks[curId] = callback
+        return curId
     }
-    // if it is not, check with shouldShowRequestPermissionRationale if we can ask again
-    if(activity.shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)){
-      // if we can show, it means it was denied in the past but we can still ask again
-      return PTLocationAccess.NOT_DETERMINED
+
+    fun removeCallback(id: Int): Boolean {
+        if (callbacks.containsKey(id)) {
+            callbacks.remove(id)
+            return true
+        }
+        return false
     }
-    // if we cannot show the prompt again, we are denied for sure
-    return PTLocationAccess.DENIED
-  }
 
-  fun requestPermission() {
-    activity.requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-      Constants.LOCATION_REQUEST_CODE)
-  }
-
-  private fun handleOnResume(){
-    // get callbacks and call them with cur state
-    val curState = getCurrentPermission()
-    for (cb in callbacks.values){
-      cb(curState)
+    fun getCurrentPermission(): PTLocationAccess {
+        val status = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+        if (status == PackageManager.PERMISSION_GRANTED) {
+            return PTLocationAccess.GRANTED
+        }
+        if (getActivity().shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            return PTLocationAccess.NOT_DETERMINED
+        }
+        return PTLocationAccess.DENIED
     }
-  }
 
+    fun requestPermission() {
+        getActivity().requestPermissions(
+            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+            Constants.LOCATION_REQUEST_CODE
+        )
+    }
+
+    private fun handleOnResume() {
+        val curState = getCurrentPermission()
+        for (cb in callbacks.values) {
+            cb(curState)
+        }
+    }
 }
