@@ -54,7 +54,7 @@
 ### Adding the Package
 
 ```bash
-yarn add react-native-esp-prov-toolkit
+pnpm add react-native-esp-prov-toolkit
 # or
 npm install react-native-esp-prov-toolkit
 ```
@@ -62,9 +62,9 @@ npm install react-native-esp-prov-toolkit
 ### Installing Peer Dependencies
 
 ```bash
-yarn add react-native-nitro-modules@^0.25.2
+pnpm add react-native-nitro-modules@^0.35.9
 # or
-npm install react-native-nitro-modules@^0.25.2
+npm install react-native-nitro-modules@^0.35.9
 ```
 
 ### iOS Setup
@@ -240,7 +240,7 @@ provisionESPDevice(
 ): Promise<PTProvisionStatus>
 
 // Get current network SSID
-getCurrentNetworkSSID(): string | undefined
+getCurrentNetworkSSID(): Promise<string | undefined>
 
 // Get device's IPv4 address
 getIPv4AddressOfESPDevice(deviceName: string): string | undefined

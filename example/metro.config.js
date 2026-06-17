@@ -5,14 +5,17 @@ const pkg = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-module.exports = getConfig(getDefaultConfig(__dirname), {
+const bobConfig = getConfig(getDefaultConfig(__dirname), {
   root,
   pkg,
   project: __dirname,
 });
+
+module.exports = {
+  ...bobConfig,
+  resolver: {
+    ...bobConfig.resolver,
+    nodeModulesPaths: [path.join(__dirname, 'node_modules'), path.join(root, 'node_modules')],
+  },
+  watchFolders: [...(bobConfig.watchFolders ?? []), root],
+};

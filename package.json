@@ -33,13 +33,13 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-esp-prov-toolkit-example",
+    "example": "pnpm --filter react-native-esp-prov-toolkit-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
-    "nitrogen": "nitro-codegen",
+    "nitrogen": "pnpm exec nitrogen",
     "release": "release-it"
   },
   "keywords": [
@@ -60,7 +60,6 @@
   },
   "author": "berkcevikel <berk@besayazilim.net> (https://thebians.com)",
   "license": "MIT",
-
   "homepage": "https://github.com/bcevikel/esp-prov-toolkit#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -81,12 +80,9 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "jest": "^29.7.0",
-    "nitro-codegen": "^0.25.2",
+    "nitrogen": "^0.35.9",
     "prettier": "^3.0.3",
-    "react": "19.0.0",
-    "react-native": "0.78.2",
     "react-native-builder-bob": "^0.40.6",
-    "react-native-nitro-modules": "^0.25.2",
     "release-it": "^17.10.0",
     "turbo": "^1.10.7",
     "typescript": "^5.2.2"
@@ -94,12 +90,9 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "react-native-nitro-modules": "^0.25.2"
+    "react-native-nitro-modules": "^0.35.9"
   },
-  "workspaces": [
-    "example"
-  ],
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "pnpm@10.12.4",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
