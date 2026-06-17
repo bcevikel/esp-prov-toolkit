@@ -5,9 +5,9 @@ import { getCurrentNetworkSSID } from '../index';
 /**
  * Custom hook to detect ESP devices in SoftAP mode by monitoring the current network SSID.
  *
- * @param scanInterval - Interval in milliseconds to check for matching SSID
+ * @param scanInterval - Interval in milliseconds to poll the current network SSID
  * @param devicePrefix - Prefix to match against the current SSID
- * @returns The detected device name if found, undefined otherwise
+ * @returns deviceName when a matching SSID is found, the raw currentNetworkSSID, and scan controls
  *
  * @note This hook requires location permissions to work correctly. Make sure to request
  * and handle location permissions before using this hook.
@@ -15,8 +15,16 @@ import { getCurrentNetworkSSID } from '../index';
 export function useSoftAPDevice(
   scanInterval: number,
   devicePrefix: string
-): [string | undefined, () => void, () => void] {
+): {
+  deviceName: string | undefined;
+  currentNetworkSSID: string | undefined;
+  startScanning: () => void;
+  stopScanning: () => void;
+} {
   const [deviceName, setDeviceName] = useState<string | undefined>(undefined);
+  const [currentNetworkSSID, setCurrentNetworkSSID] = useState<
+    string | undefined
+  >(undefined);
   const [appState, setAppState] = useState(AppState.currentState);
   const [scanState, setScanState] = useState<'enabled' | 'disabled'>('enabled');
 
@@ -34,37 +42,35 @@ export function useSoftAPDevice(
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
-    // If we are not explicitly ACTIVE, the effect should not do anything (empty destructor returned).
     if (appState !== 'active') {
-      return;
-    }
-    // If the scan state is disabled, the effect shouldnt do anything.
-    if (scanState === 'disabled') {
       return;
     }
 
     const checkSSID = async () => {
       try {
-        const currentSSID = getCurrentNetworkSSID();
+        const ssid = await getCurrentNetworkSSID();
+        setCurrentNetworkSSID(ssid);
 
-        if (currentSSID && currentSSID.startsWith(devicePrefix)) {
-          setDeviceName(currentSSID);
-        } else {
-          setDeviceName(undefined);
+        if (scanState === 'enabled') {
+          if (ssid && ssid.startsWith(devicePrefix)) {
+            setDeviceName(ssid);
+          } else {
+            setDeviceName(undefined);
+          }
         }
       } catch (error) {
         console.log('Error checking SSID:', error);
-        setDeviceName(undefined);
+        setCurrentNetworkSSID(undefined);
+        if (scanState === 'enabled') {
+          setDeviceName(undefined);
+        }
       }
 
-      // Schedule next check
       timeoutId = setTimeout(checkSSID, scanInterval);
     };
 
-    // Start the initial check
     checkSSID();
 
-    // Cleanup function
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -80,5 +86,5 @@ export function useSoftAPDevice(
     setScanState('enabled');
   }, [setScanState]);
 
-  return [deviceName, startScanning, stopScanning];
+  return { deviceName, currentNetworkSSID, startScanning, stopScanning };
 }

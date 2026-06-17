@@ -111,8 +111,9 @@ export function SoftapProvScreen() {
     provError,
     wifiList,
     provisionDevice,
+    currentNetworkSSID,
   } = useSoftapProvisioning(
-    10000, // scanInterval
+    3000, // scanInterval
     10000, // promptTimeoutMs
     DEVICE_PREFIX, // devicePrefix
     PTSecurity.SECURITY_0, // security
@@ -121,6 +122,9 @@ export function SoftapProvScreen() {
     undefined, // softAPPassword
     alertForLocationPermssions // onLocationPermDenied
   );
+
+  const isDeviceNetwork =
+    currentNetworkSSID !== undefined && currentNetworkSSID.startsWith(DEVICE_PREFIX);
 
   const handleWifiSelect = (wifi: PTWifiEntry) => {
     setSelectedWifi(wifi);
@@ -238,19 +242,51 @@ export function SoftapProvScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      {currentState === 'searching' && renderSearchingState()}
-      {currentState === 'connecting' && renderConnectingState()}
-      {currentState === 'connected' && !selectedWifi && renderConnectedState()}
-      {currentState === 'connected' && selectedWifi && renderPasswordInput()}
-      {currentState === 'provisioning' && renderProvisioningState()}
-      {currentState === 'success' && renderSuccessState()}
-      {currentState === 'failure' && renderFailureState()}
+    <View style={styles.screen}>
+      <View style={styles.ssidBanner}>
+        <Text style={styles.ssidLabel}>Current Network</Text>
+        <Text style={[styles.ssidValue, isDeviceNetwork && styles.ssidValueMatched]}>
+          {currentNetworkSSID ?? 'Unknown'}
+        </Text>
+      </View>
+      <View style={styles.container}>
+        {currentState === 'searching' && renderSearchingState()}
+        {currentState === 'connecting' && renderConnectingState()}
+        {currentState === 'connected' && !selectedWifi && renderConnectedState()}
+        {currentState === 'connected' && selectedWifi && renderPasswordInput()}
+        {currentState === 'provisioning' && renderProvisioningState()}
+        {currentState === 'success' && renderSuccessState()}
+        {currentState === 'failure' && renderFailureState()}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  ssidBanner: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: '#f5f5f5',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+  },
+  ssidLabel: {
+    fontSize: 12,
+    color: '#888',
+    marginBottom: 4,
+  },
+  ssidValue: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  ssidValueMatched: {
+    color: '#00C851',
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',

@@ -45,10 +45,8 @@ export function useSoftapProvisioning(
   // Custom Hooks
   const { locationAccess, requestLocationPermission } =
     useLocationPermissions();
-  const [deviceName, startScanning, stopScanning] = useSoftAPDevice(
-    scanInterval,
-    devicePrefix
-  );
+  const { deviceName, currentNetworkSSID, startScanning, stopScanning } =
+    useSoftAPDevice(scanInterval, devicePrefix);
   const { connect, disconnect, fetchWifiList, provision } = useProvisionDevice(
     security,
     PTTransport.TRANSPORT_SOFTAP
@@ -236,6 +234,7 @@ export function useSoftapProvisioning(
     provError,
     provisionDevice,
     deviceName,
+    currentNetworkSSID,
     wifiList,
   };
 }
