@@ -59,7 +59,7 @@ export interface EspProvToolkit
 
   getIPv4AddressOfESPDevice(deviceName: string): PTStringResult;
 
-  getCurrentNetworkSSID(): PTStringResult;
+  getCurrentNetworkSSID(): Promise<PTStringResult>;
 
   requestLocationPermission(): void;
 

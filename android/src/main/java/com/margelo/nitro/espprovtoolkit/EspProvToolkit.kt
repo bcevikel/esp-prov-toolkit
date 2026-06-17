@@ -288,24 +288,23 @@ class EspProvToolkit : HybridEspProvToolkitSpec() {
     return PTStringResult(false,null,0.0)
   }
 
-  override fun getCurrentNetworkSSID(): PTStringResult {
-    val ctx = getContext()
-    // Prompt the user for access wifi state permission if possible
-    PermissionsHelper.requestWifiStatePerms(ctx)
-    // Do the actual query
-    try {
-      val wifiManager = ctx.getSystemService(Context.WIFI_SERVICE) as WifiManager
-      val wifiInfo = wifiManager.connectionInfo
-      val ssid = wifiInfo.ssid
-      // Remove quotes if present
-      val cleanSsid = if (ssid.startsWith("\"") && ssid.endsWith("\"")) {
-        ssid.substring(1, ssid.length - 1)
-      } else {
-        ssid
+  override fun getCurrentNetworkSSID(): Promise<PTStringResult> {
+    return Promise.async {
+      val ctx = getContext()
+      PermissionsHelper.requestWifiStatePerms(ctx)
+      try {
+        val wifiManager = ctx.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wifiInfo = wifiManager.connectionInfo
+        val ssid = wifiInfo.ssid
+        val cleanSsid = if (ssid.startsWith("\"") && ssid.endsWith("\"")) {
+          ssid.substring(1, ssid.length - 1)
+        } else {
+          ssid
+        }
+        return@async PTStringResult(true, cleanSsid, null)
+      } catch (e: Exception) {
+        return@async PTStringResult(false, null, handleExceptions(e).toDouble())
       }
-      return PTStringResult(true,cleanSsid,null)
-    }catch (e : Exception){
-      return PTStringResult(false,null, handleExceptions(e).toDouble())
     }
   }
 

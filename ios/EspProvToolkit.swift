@@ -1,7 +1,7 @@
 import NitroModules
 import ESPProvision
 import SystemConfiguration.CaptiveNetwork
-
+import NetworkExtension
 
 class EspProvToolkit: HybridEspProvToolkitSpec {
   // Static dict to store EspDevice instances
@@ -156,7 +156,7 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
       do{
         let device = try EspProvToolkit.getDeviceEntry(forKey: deviceName)
         
-        let provStatus = try await device.provisionAsync(ssid: ssid, passcode: password)
+        _ = try await device.provisionAsync(ssid: ssid, passcode: password)
         return PTProvisionResult(success: true, error: nil)
       }
       catch(let provError as ESPProvisionError){
@@ -206,17 +206,14 @@ class EspProvToolkit: HybridEspProvToolkitSpec {
     }
   }
   
-  func getCurrentNetworkSSID() throws -> PTStringResult {
-    if let interfaces = CNCopySupportedInterfaces() as NSArray? {
-      for interface in interfaces {
-        if let interfaceInfo = CNCopyCurrentNetworkInfo(interface as! CFString) as NSDictionary? {
-          if let currentSSID = interfaceInfo[kCNNetworkInfoKeySSID as String] as? String {
-            return PTStringResult(success: true, str: currentSSID, error: nil)
+  func getCurrentNetworkSSID() -> Promise<PTStringResult> {
+      return Promise.async {
+          let network = await NEHotspotNetwork.fetchCurrent()
+          if let ssid = network?.ssid {
+              return PTStringResult(success: true, str: ssid, error: nil)
           }
-        }
+          return PTStringResult(success: false, str: nil, error: Double(PTError.runtimeUnknownError.rawValue))
       }
-    }
-    return PTStringResult(success: false, str: nil, error: Double(PTError.runtimeUnknownError.rawValue))
   }
   
   

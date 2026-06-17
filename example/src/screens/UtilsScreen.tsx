@@ -18,9 +18,9 @@ export function UtilsScreen() {
     }
   };
 
-  const onRequestSSID = () => {
+  const onRequestSSID = async () => {
     try {
-      const ssid = getCurrentNetworkSSID();
+      const ssid = await getCurrentNetworkSSID();
       setSSIDText(ssid ? ssid : 'Unknown');
     } catch (error) {
       setSSIDText(error instanceof Error ? error.message : 'Failed to get SSID.');

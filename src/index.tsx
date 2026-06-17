@@ -142,11 +142,10 @@ export function getIPv4AddressOfESPDevice(
   return result.str;
 }
 
-export function getCurrentNetworkSSID(): string | undefined {
-  const result = EspProvToolkitHybridObject.getCurrentNetworkSSID();
-  if (!result.success && result.error) {
-    throw new PTException(result.error);
-  }
+export async function getCurrentNetworkSSID(): Promise<string | undefined> {
+  const result = await handleError(
+    EspProvToolkitHybridObject.getCurrentNetworkSSID()
+  );
   return result.str;
 }
 
