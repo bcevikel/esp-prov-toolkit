@@ -22,3 +22,6 @@ target_link_libraries(
         ${LOG_LIB}
         android # <-- Android core
 )
+
+# Align shared library segments to 16 KB for Android 15+ page-size support
+target_link_options(${PACKAGE_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
