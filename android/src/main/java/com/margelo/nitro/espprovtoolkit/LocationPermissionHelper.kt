@@ -1,5 +1,6 @@
 package com.margelo.nitro.espprovtoolkit
 
+import android.content.Context
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -16,6 +17,11 @@ class LocationPermissionHelper(val context: ReactApplicationContext) {
     private var cbCount: Int = 0
     private val callbacks: MutableMap<Int, LocationStatusCallback> = mutableMapOf()
     private val mainHandler = Handler(Looper.getMainLooper())
+
+    // Remembers that this library has shown the system prompt once. Android itself cannot
+    // tell "never asked" from "denied for good": in both cases the permission is not granted
+    // and shouldShowRequestPermissionRationale() is false.
+    private val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     private val lcObserver = object : DefaultLifecycleObserver {
         override fun onResume(owner: LifecycleOwner) {
@@ -60,14 +66,25 @@ class LocationPermissionHelper(val context: ReactApplicationContext) {
         if (status == PackageManager.PERMISSION_GRANTED) {
             return PTLocationAccess.GRANTED
         }
-        if (getActivity().shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+        // Same contract as iOS: NOT_DETERMINED until the user has been asked once, DENIED
+        // after that. Before, a fresh install reported DENIED straight away, so callers
+        // that only ask on NOT_DETERMINED never showed the system prompt.
+        if (!prefs.getBoolean(KEY_LOCATION_REQUESTED, false)) {
             return PTLocationAccess.NOT_DETERMINED
         }
         return PTLocationAccess.DENIED
     }
 
     fun requestPermission() {
-        getActivity().requestPermissions(
+        // Ask once, like iOS: after the first answer a request does nothing. Callers tend to
+        // request again while the prompt is still up or right after it closes (the app goes
+        // to the background and back), which showed the prompt a second time.
+        if (getCurrentPermission() != PTLocationAccess.NOT_DETERMINED) {
+            return
+        }
+        val activity = getActivity()
+        prefs.edit().putBoolean(KEY_LOCATION_REQUESTED, true).apply()
+        activity.requestPermissions(
             arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
             Constants.LOCATION_REQUEST_CODE
         )
@@ -78,5 +95,10 @@ class LocationPermissionHelper(val context: ReactApplicationContext) {
         for (cb in callbacks.values) {
             cb(curState)
         }
+    }
+
+    private companion object {
+        const val PREFS_NAME = "esp_prov_toolkit"
+        const val KEY_LOCATION_REQUESTED = "location_permission_requested"
     }
 }
